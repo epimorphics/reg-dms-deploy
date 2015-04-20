@@ -1,10 +1,12 @@
 # AWS Configuration information
 
 # VPC configuration
-readonly SG_BACK_END=sg-b6a5f3d3            # security group for lds-back-end
-readonly SG_FRONT_END=sg-61a2f404           # security group for lds-front-end
-readonly VPC_PUBLIC_B=subnet-4bf99d2e       # public subnet for LDS VPC
-readonly VPC_PUBLIC_C=subnet-5db9352a       # public subnet for LDS VPC
+readonly SG_BACK_END=sg-b6a5f3d3            # security group for dms-backend
+readonly SG_FRONT_END=sg-61a2f404           # security group for dms-frontend
+readonly SG_CONTROL=sg-eea5f38b             # security group for dms-control
+
+readonly VPC_PUBLIC_B=subnet-4bf99d2e       # public subnet for DMS VPC
+readonly VPC_PUBLIC_C=subnet-5db9352a       # public subnet for DMS VPC
 readonly VPC_PUBLIC=( $VPC_PUBLIC_B $VPC_PUBLIC_C )
 
 # Interfaces

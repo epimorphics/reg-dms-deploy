@@ -17,8 +17,8 @@ mkdir -p $serverDir
 AWS_EBS=50
 AWS_INSTANCE_STORE=yes
 AWS_INSTANCE_TYPE=m3.large
-AWS_AMI=ami-cda130ba
-AWS_SG=sg-1a15c77f                 # LDS control
+AWS_AMI=$AMI_UBUNTU_EBS
+AWS_SG=$SG_CONTROL
 CHEF_ROLE=dms_controller
 AWS_IAM_ROLE_ARN="$AWS_DMS_ROLE"
 AWS_IAM_ROLE_NAME=dms-automation
