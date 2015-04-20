@@ -16,7 +16,7 @@ readonly MONITOR_NET_IF="eni-76e98f00"
 readonly AWS_DMS_ROLE="arn:aws:iam::828737851284:instance-profile/dms-automation"
 
 # Location where the configuration state should be preserved
-readonly S3_STATE="s3://nrw-dms-deploy/dms-state"
+readonly S3_STATE="s3://{prefix}-dms-deploy/dms-state"
 
 # Other AWS defaults
 export AWS_DEFAULT_REGION=eu-west-1
@@ -24,5 +24,5 @@ readonly AMI_UBUNTU_EBS=ami-cda130ba        # ubuntu 14.04, 64bit, ebs root
 readonly AMI_UBUNTU_INSTANCE=ami-3b69b84c   # ubuntu 14.04, 64bit, instance root
 readonly AMI_UBUNTU_HVM=ami-c5bf2eb2        # ubuntu 14.04, 64bit, HVM (for use with t2)
 
-readonly PREFIX=nrw
+readonly PREFIX={prefix}
 readonly AWS_DEFAULT_PROFILE=nrw

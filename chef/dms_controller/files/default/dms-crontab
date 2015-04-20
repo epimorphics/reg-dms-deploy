@@ -1,2 +1,0 @@
-# Backup production log files to S3 overnight
-0 02 * * * root /bin/bash /opt/dms/conf/scripts/ops/logSync.sh > /var/opt/dms/log/logSync.log

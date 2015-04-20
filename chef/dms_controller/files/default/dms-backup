@@ -1,2 +1,0 @@
-#!/bin/bash
-curl -u backupuser:backup -X POST http://localhost:8080/dms/api/backupMetadata

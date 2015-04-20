@@ -1,11 +1,17 @@
 Deployment scripts for creating a DMS instance including the DMS controller and the monitoring components
 
-## Deployment
+For each copy of DMS create a repository with a copy of this (retain this as an upstream for bug fixes).
 
-Assumes awscli installed on your machine with a profile for where things should be created.
+## AWS set up and configuration
 
-     export AWS_DEFAULT_PROFILE=control-lds 
+See https://github.com/epimorphics/internal/wiki/Ops-install-new-DMS-instance
 
-     bin/createDMS     # Allocates server and initiates chef solo
-     bin/configDMS     # Runs chef solo again if you need to reprovision of if first run fails
-     bin/installNagios # Semi-interactive install actions
+## Commands
+
+All should be run from the root of the project directory tree
+
+Command | Action
+---|---
+`bin/createDMS` | Allocates DMS controller server and initiates chef solo
+`bin/installNagios` | Install nagios on DMS controller, semi-interactive so not part of chef solo, only needs to be run once
+`bin/configDMS` | Update configuration of the DMS controller via chef solo

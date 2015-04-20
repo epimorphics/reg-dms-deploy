@@ -1,27 +1,20 @@
 # dms_controller-cookbook
 
-TODO: Enter the cookbook description here.
+Role cookbook for a DMS controller.
+
+Runs the dms_controller_base configuration with required extensions.
+
+Typical extensions:
+
+   * customize the key attributes - prefix (and attributes containing the prefix), use_https and monitor_lbs
+   * add deployment of baseline images and web content
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
+Ubuntu 14.04
 
 ## Attributes
 
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['dms_controller']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
 
 ## Usage
 

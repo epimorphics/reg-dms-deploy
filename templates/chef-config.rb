@@ -1,6 +1,6 @@
 # The prefix used to name this DMS instance
 # Affects the naming of keys, S3 buckets, the control server
-pre = 'nrw'
+pre = '{prefix}'
 node.override['dms_controller']['prefix']         = pre
 
 # The DNS name to use for the control server
