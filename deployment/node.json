@@ -1,7 +1,0 @@
-{
-    "run_list" : [ "role[dms_controller]" ],
-    "automatic" : { "ipaddress" : "ec2-54-194-13-210.eu-west-1.compute.amazonaws.com" },
-    "epi_server_base": {
-        "system_name": "dms-controller"
-    }
-}

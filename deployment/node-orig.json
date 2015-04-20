@@ -1,8 +1,0 @@
-{
-  "run_list": [
-
-  ],
-  "automatic": {
-    "ipaddress": "ec2-54-194-13-210.eu-west-1.compute.amazonaws.com"
-  }
-}
