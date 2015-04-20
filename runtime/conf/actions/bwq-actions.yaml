@@ -1,0 +1,159 @@
+# Actions customized for the LDS BWQ service
+
+# Data server allocation
+"@name" : bwq/dataserver/allocate
+"@type" : script
+"@script" : "ops/generic-allocate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+#    "AWS_EBS" : 8
+    "AWS_INSTANCE_STORE" : "yes"
+    "AWS_INSTANCE_TYPE" : "m3.large"
+    "AWS_AMI" : "ami-cda130ba"
+    "AWS_SG" : "sg-761ac813"    # lds-back-end
+    "CHEF_ENV"  : "lds-data"
+    "CHEF_ROLE" : "dms_data_server"
+    "AWS_IAM_ROLE_ARN" : "arn:aws:iam::853478862498:instance-profile/dms-update"
+---
+# Data server termination  
+"@name" : bwq/dataserver/terminate
+"@type" : script
+"@script" : "ops/terminate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+    "NRC_SERVICE"    : "check_http_ping"
+---
+# Data server configuration  
+"@name" : bwq/dataserver/configure
+"@type" : script
+"@script" : "ops/generic-configure.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+    "NRC_HOSTGROUP"  : "BWQ-data"
+    "NRC_SERVICESET" : "BWQ-data-ss"
+    "NRC_SERVICE"    : "check_http_ping"
+---
+# Presentation server allocation
+"@name" : bwq/presserver/allocate
+"@type" : script
+"@script" : "ops/pres-allocate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+#    "AWS_EBS" : 8
+    "AWS_INSTANCE_STORE" : "yes"
+    "AWS_INSTANCE_TYPE" : "m3.large"
+    "AWS_AMI" : "ami-cda130ba"
+    "AWS_SG" : "sg-b815c7dd"   # lds-front-end
+    "CHEF_ENV"  : "lds-bwq-test-pres"
+#    "CHEF_ENV"  : "lds-bwq-pres"
+#    "CHEF_ROLE" : "ea-bwq-pres"
+    "CHEF_ROLE" : "ea-bwq-pres-production"
+    "AWS_IAM_ROLE_ARN" : "arn:aws:iam::853478862498:instance-profile/dms-update"
+---
+# Presentation server allocation (production versio)
+"@name" : bwq/pres-production/allocate
+"@type" : script
+"@script" : "ops/pres-allocate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+#    "AWS_EBS" : 8
+    "AWS_INSTANCE_STORE" : "yes"
+    "AWS_INSTANCE_TYPE" : "m3.large"
+    "AWS_AMI" : "ami-cda130ba"
+    "AWS_SG" : "sg-b815c7dd"   # lds-front-end
+    "CHEF_ENV"  : "lds-bwq-pres"
+    "CHEF_ROLE" : "ea-bwq-pres-production"
+    "AWS_IAM_ROLE_ARN" : "arn:aws:iam::853478862498:instance-profile/dms-update"
+---
+# Presentation server termination  
+"@name" : bwq/presserver/terminate
+"@type" : script
+"@script" : "ops/terminate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+    "NRC_SERVICE"    : "check_http_ping"
+---
+# Presentation server configuration  
+"@name" : bwq/presserver/configure
+"@type" : script
+"@script" : "ops/generic-configure.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+    "NRC_HOSTGROUP"  : "BWQ-pres"
+    "NRC_SERVICESET" : "BWQ-pres-ss"
+    "NRC_SERVICE"    : "check_http_ping"
+---
+# General publication processing
+"@name" : bwq/postPublish
+"@type" : script
+"@script" : "bwq/post-publish.sh"
+"@args" :
+    -  "servers"
+---
+# STP auto-publish endpoint
+"@name" : api/publishTesting
+"@type" : sequence
+"@actions" :
+  - "@javaclass" : com.epimorphics.dms.tasks.EmbeddedPublishAction
+    "publicationSet" : testing
+#  - "@type"      : script
+#    "@script"    : bwq/prf-postprod.sh
+#    "@args"      : [ "filename" ]
+  - "@javaclass" : com.epimorphics.dms.tasks.NotifyAction
+    "message" :    "Publications to testing completed"
+    "notifyuser" : "dave@epimorphics.com"
+"@onError" :
+    "@javaclass" : com.epimorphics.dms.tasks.NotifyAction
+    "message"    : "publication to testing FAILED"
+    "notifyuser" : "dave@epimorphics.com"
+---
+# STP auto-publish endpoint
+"@name" : api/publishProduction
+"@type" : sequence
+"@actions" :
+  - "@javaclass" : com.epimorphics.dms.tasks.EmbeddedPublishAction
+    "publicationSet" : production
+#  - "@type"      : script
+#    "@script"    : bwq/prf-postprod.sh
+#    "@args"      : [ "filename" ]
+  - "@javaclass" : com.epimorphics.dms.tasks.NotifyAction
+    "message" :    "Publications to testing completed"
+    "notifyuser" : "dave@epimorphics.com"
+"@onError" :
+    "@javaclass" : com.epimorphics.dms.tasks.NotifyAction
+    "message"    : "publication to testing FAILED"
+    "notifyuser" : "dave@epimorphics.com"
+---
+# STP auto-publish endpoint - to default publication environment
+"@name" : api/autoPublish
+"@type" : sequence
+"@actions" :
+  - "@javaclass" : com.epimorphics.dms.tasks.EmbeddedPublishAction
+  - "@javaclass" : com.epimorphics.dms.tasks.NotifyAction
+    "message" :    "Publication to testing completed"
+    "notifyuser" : "dave@epimorphics.com"
+"@onError" :
+    "@javaclass" : com.epimorphics.dms.tasks.NotifyAction
+    "message"    : "publication to testing FAILED"
+    "notifyuser" : "dave@epimorphics.com"
+---
+# Clear presentation caches
+"@name" : bwq/clearCache
+"@type" : script
+"@script" : "bwq/clear-caches.sh"
+"@args" :
+  - "tier"
+---
+# Synchronize web content
+"@name" : bwq/webSync
+"@type" : script
+"@script" : "bwq/web-sync.sh"
+"@args" :
+  - "tier"

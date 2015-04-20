@@ -1,0 +1,14 @@
+#!/bin/bash
+# Rebuild S3 state copy from the current set of server config files
+# Should never be needed ...
+
+cd /var/opt/dms
+for i in \
+    services/*/publicationSets/*/tiers/*/servers/*/config.json \
+    services/*/publicationSets/*/tiers/*/servers/*/status \
+    services/*/publicationSets/*/tiers/*/servers/*/aws-instance.json \
+    services/*/publicationSets/*/tiers/*/aws-lb.json \
+    services/*/publicationSets/*/tiers/*/lb-name 
+do 
+    aws s3 cp $i s3://dms-deploy/dms-state/$i
+done

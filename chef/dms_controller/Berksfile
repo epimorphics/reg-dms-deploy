@@ -1,0 +1,5 @@
+source "https://supermarket.getchef.com"
+source "http://epi-chef-server.epimorphics.net:26200/"
+#source "http://54.171.66.109:26200/"
+ 
+metadata

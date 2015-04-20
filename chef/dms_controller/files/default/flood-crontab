@@ -1,0 +1,5 @@
+# Run flood-monitoring update every 15mins
+3,18,33,48 * * * * ubuntu /bin/bash /var/opt/flood-monitoring/bin/update.sh > /dev/null 2>&1
+#00 * * * * ubuntu /bin/bash /var/opt/flood-monitoring/bin/archive.sh > /dev/null 2>&1
+0 04 * * * tomcat7 /bin/bash /var/opt/flood-monitoring/bin/dailyClean.sh > /var/opt/flood-monitoring/logs/dailyCleanCrontab.log 2>&1
+#0 05 * * 5 ubuntu /bin/bash /var/opt/flood-monitoring/bin/periodicRebuild.sh > /var/opt/flood-monitoring/logs/weeklyRebuildCrontab.log 2>&1

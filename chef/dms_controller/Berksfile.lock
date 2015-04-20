@@ -1,0 +1,32 @@
+DEPENDENCIES
+  dms_controller
+    path: .
+    metadata: true
+
+GRAPH
+  apt (2.7.0)
+  dms_controller (0.1.12)
+    ea-floods-updater (>= 0.0.0)
+    epi_apache (>= 0.4.1)
+    epi_base (>= 0.0.0)
+    epi_collectd (>= 0.0.0)
+    epi_java (>= 0.0.0)
+    epi_ruby (>= 0.0.0)
+    epi_server_base (>= 0.2.7)
+    epi_tomcat (>= 0.1.2)
+  ea-floods-updater (0.1.9)
+    epi_base (>= 0.0.0)
+    epi_java (>= 0.1.2)
+  epi_apache (0.16.1)
+    epi_server_base (~> 0.6)
+  epi_base (1.2.2)
+    apt (>= 0.0.0)
+  epi_collectd (0.1.1)
+    epi_server_base (>= 0.0.0)
+  epi_ganglia (0.1.0)
+  epi_java (0.1.2)
+  epi_ruby (0.6.1)
+  epi_server_base (0.7.1)
+    epi_base (>= 0.0.0)
+    epi_ganglia (>= 0.0.0)
+  epi_tomcat (0.2.0)

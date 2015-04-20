@@ -1,0 +1,17 @@
+#!/bin/bash
+# (re-)run the chef configuration for the DMS nodes
+# Assumes runing at root of dms_deploy area
+set -o errexit
+
+. bin/lib/lib.sh
+CheckInstalls
+
+NAME="dms"
+FULL_NAME="dms-controller"
+serverDir=deployment
+
+IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
+cd chef/dms_controller
+knife solo cook ubuntu@$IP ../../deployment/node.json --identity-file /var/opt/dms/.ssh/lds.pem --yes --no-color
+cd ..
+

@@ -1,0 +1,28 @@
+#!/bin/bash
+# Install a new set of flood area polygons and metadata
+
+set -o errexit
+
+readonly FM_BASE="/var/opt/flood-monitoring/"
+cd "$FM_BASE"
+
+# Fetch the current feature and centroid data
+aws s3 cp s3://dms-deploy/flood-monitoring/ incoming --recursive --exclude '*' --include '*.geojson' --include '*.json' --exclude '*status.json'
+
+# Transform to a single RDF file
+java -cp bin/RTdata-run.jar com.epimorphics.EArealtime.FWISAreasConverter
+
+# Publish the transformed file
+S3BASE="s3://dms-deploy/images/flood-monitoring/updates/$(date +%F/%H-%M-%S-%N)"
+aws s3 cp outgoing/flood_areas.ttl "$S3BASE/areasupdate_replace_http:%2F%2Fenvironment%2Edata%2Egov%2Euk%2Fflood-monitoring%2Fgraph%2FfloodAreas.ttl"
+
+# Fetch and unpack the geojson polygon files
+aws s3 cp s3://dms-deploy/flood-monitoring/flood_polygons.tgz incoming
+
+cd /var/opt/dms/services/floods/publicationSets/production/Web/flood-monitoring
+sudo -u tomcat7 tar xzf "$FM_BASE/incoming/flood_polygons.tgz"
+rm "$FM_BASE/incoming/flood_polygons.tgz"
+
+# Publish the unpackaged files to the replicas
+cd /opt/dms/conf/scripts
+sudo -u tomcat7 floods/post-publish.sh services/floods/publicationSets/production/tiers/productionServers

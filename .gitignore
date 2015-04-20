@@ -1,0 +1,7 @@
+target/
+.settings
+.classpath
+.project
+velocity.log
+.vagrant
+tmp/

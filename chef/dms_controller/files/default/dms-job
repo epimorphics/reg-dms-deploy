@@ -1,0 +1,23 @@
+#!/bin/bash
+# Submit a job request to the dms worker pool
+# Usage:  dms-job  action [target] message
+
+readonly QUEUE="https://sqs.eu-west-1.amazonaws.com/853478862498/lds-automation"
+
+if [[ $# = 3 ]]; then
+    ACTION="$1"
+    TARGET="$2"
+    MESSAGE="$3"
+elif [[ $# = 2 ]]; then
+    ACTION="$1"
+    MESSAGE="$2"
+else
+    echo "Usage:  dms-job  action [target] message"
+    exit 1
+fi
+
+ATTR='"action" : {"DataType":"String","StringValue":"'$ACTION'"}'
+if [[ -n $TARGET ]]; then
+    ATTR=$ATTR', "target" : {"DataType":"String","StringValue":"'$TARGET'"}'
+fi
+aws sqs send-message --queue-url $QUEUE --message-body "$MESSAGE" --message-attributes "{$ATTR}"

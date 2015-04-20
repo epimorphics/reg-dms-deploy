@@ -1,0 +1,299 @@
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix version:  <http://purl.org/linked-data/version#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix qb:   <http://purl.org/linked-data/cube#> .
+@prefix org:  <http://www.w3.org/ns/org#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+
+@prefix dms: <http://www.epimorphics.com/public/vocabulary/dms#> .
+
+@prefix : <http://localhost/dms/metadata/bwq/> .
+
+:bwq a dms:DataService;
+    rdfs:label "Bathing water quality"@en;
+    rdfs:comment "Data service providing information on bathing water profiles, in-season measurements, annual assesments and associated events and forecasts"@en;
+    skos:notation "bwq";
+    dms:defaultPublicationSet :production;
+    dms:publicationSet :production, :testing;
+    dms:notifyUser "dave@epimorphics.com";
+    .
+
+# -- Data components --------------------------------
+
+:annual a dms:DataComponent;
+    rdfs:label "Annual assessments"@en;
+    rdfs:comment "Data cube describing historic and current annual Bathing Water quality assessments."@en;
+    skos:notation "annual";
+    dct:isPartOf :bwq;
+    dms:dataConverter "bwq-compliance-assessment";
+    dms:postPublishScript "bwq/updates/inseason-rebuild.ru";
+    dms:updatePolicy dms:series;
+    dms:sourcePublishDir  "sources/bwq/eaew/input";
+    dms:dataPublishDir    "sources/bwq/eaew/output";
+    .
+
+:inseason a dms:DataComponent;
+    rdfs:label "In-season samples"@en;
+    rdfs:comment "Data cube describing historic and current in-season Bathing Water quality samples."@en;
+    skos:notation "in-season";
+    dct:isPartOf :bwq;
+    dms:dataConverter "bwq-in-season-assessment";
+    dms:postPublishScript "bwq/updates/inseason-rebuild.ru";
+    dms:updatePolicy dms:series;
+    dms:sourcePublishDir  "sources/bwq/eaew/input";
+    dms:dataPublishDir    "sources/bwq/eaew/output";
+    .
+
+:revised-annual a dms:DataComponent;
+    rdfs:label "RBWD Annual assessments"@en;
+    rdfs:comment "Data cube describing historic and current annual Bathing Water quality assessments under the revised directive."@en;
+    skos:notation "revised-annual";
+    dct:isPartOf :bwq;
+    dms:dataConverter "rbwd-compliance-assessment";
+    dms:postPublishScript "bwq/updates/inseason-rebuild.ru";
+    dms:updatePolicy dms:series;
+    dms:sourcePublishDir  "sources/bwq/eaew/input";
+    dms:dataPublishDir    "sources/bwq/eaew/output";
+    .
+
+:revised-inseason a dms:DataComponent;
+    rdfs:label "RBWD In-season samples"@en;
+    rdfs:comment "Data cube describing historic and current in-season Bathing Water quality samples, for use under the revised directive."@en;
+    skos:notation "revised-in-season";
+    dct:isPartOf :bwq;
+    dms:dataConverter "rbwd-in-season-assessment";
+    dms:postPublishScript "bwq/updates/inseason-rebuild.ru";
+    dms:updatePolicy dms:series;
+    dms:sourcePublishDir  "sources/bwq/eaew/input";
+    dms:dataPublishDir    "sources/bwq/eaew/output";
+    .
+
+:reference a dms:DataComponent;
+    rdfs:label "Site reference data"@en;
+    rdfs:comment "Reference data giving identifiers for Bathing Waters and asssociated sampling points."@en;
+    skos:notation "reference";
+    dct:isPartOf :bwq;
+    dms:dataConverter "bwq-sites";
+    dms:updatePolicy dms:single;
+    dms:asMapSource  "bwq-sp-to-bw";
+    dms:sourcePublishDir  "sources/bwq/eaew/input";
+    dms:dataPublishDir    "sources/bwq/eaew/output";
+    .
+
+:profiles a dms:DataComponent;
+    rdfs:label "BW profiles"@en;
+    rdfs:comment "Profiles describing attributes of bathing waters, 2015 version."@en;
+    skos:notation "profiles";
+    dct:isPartOf :bwq;
+#    dms:dataConverter "bwq-profile";
+    dms:dataConverter "revised-bwq-profile";
+    dms:postPublishScript "bwq/updates/profile-rebuild.ru";
+    dms:updatePolicy dms:series;
+    .
+
+:features a dms:DataComponent;
+    rdfs:label "BW features"@en;
+    rdfs:comment "Spatial features associated with bathing waters."@en;
+    skos:notation "features";
+    dct:isPartOf :bwq;
+    dms:dataConverter "bwq-profile-feature";
+    dms:updatePolicy dms:series;
+    .
+
+:suspensions a dms:DataComponent;
+    rdfs:label "Abnormal situations"@en;
+    rdfs:comment "Records of abnormal situations (which lead to suspensions of monitoring)."@en;
+    skos:notation "suspensions";
+    dct:isPartOf :bwq;
+    dms:dataConverter "bwq-suspension-of-monitoring";
+    dms:postPublishScript "bwq/updates/som-rebuild.ru";
+    dms:updatePolicy dms:series;
+    dms:sourcePublishDir  "sources/bwq/eaew/input";
+    dms:dataPublishDir    "sources/bwq/eaew/output";
+    .
+
+:forecasts a dms:DataComponent;
+    rdfs:label "Pollution Risk Forecasts"@en;
+    rdfs:comment "Forecasts of short term pollution risk."@en;
+    skos:notation "forecasts";
+    dct:isPartOf :bwq;
+    dms:dataConverter "bwq-short-term-pollution-risk-prediction";
+    dms:postPublishScript "bwq/updates/stp-rebuild.ru";
+    dms:updatePolicy dms:series;
+    dms:sourcePublishDir  "sources/bwq/eaew/input";
+    dms:dataPublishDir    "sources/bwq/eaew/output";
+    .
+
+:vocabularies a dms:DataComponent;
+    rdfs:label "Vocabularies"@en;
+    rdfs:comment "Collection of vocabularies/ontologies used to publish Bathing Water quality information."@en;
+    skos:notation "vocabularies";
+    dct:isPartOf :bwq;
+    dms:updatePolicy dms:multiple;
+    dms:sourcePublishDir  "sources/def";
+    dms:dataPublishDir    "sources/def";
+    .
+
+:stepChange a dms:DataComponent;
+    rdfs:label "Step changes"@en;
+    rdfs:comment "Step changes in Bathing Water that might break continuity of classification."@en;
+    skos:notation "stepChange";
+    dct:isPartOf :bwq;
+    dms:dataConverter "bwq-step-change";
+    dms:updatePolicy dms:series;
+    .
+
+:testData a dms:DataComponent;
+    rdfs:label "Test data"@en;
+    rdfs:comment "RDF files uploaded for test purposes only, not for production use."@en;
+    skos:notation "testdata";
+    dct:isPartOf :bwq;
+    dms:updatePolicy dms:multiple;
+    .
+
+# -- Publication sets --------------------------------
+
+:production a dms:PublicationSet;
+    rdfs:label "Production"@en;
+    skos:notation "production";
+    dct:description "The publications released to the production service."@en;
+    dms:publicationTier :productionPubServers;
+    dms:tier :pPresServers;
+    dms:consolidatedUpdates false;
+    dms:image  :productionBaseline;
+    dms:publishAction "default/publish";
+    dms:postPublishAction "bwq/postPublish";
+    .
+
+:testing a dms:PublicationSet;
+    rdfs:label "Testing"@en;
+    skos:notation "testing";
+    dct:description "The publications released to the testing service."@en;
+    dms:publicationTier :testingPubServers;
+    dms:tier :tPresServers;
+    dms:consolidatedUpdates false;
+    dms:image  :testBaseline;
+    dms:publishAction "default/publish";
+    dms:postPublishAction "bwq/postPublish";
+    .
+
+# -- Tiers --------------------------------
+
+:productionPubServers a dms:Tier;
+    rdfs:label "Data servers in production"@en;
+    dct:description "Data servers holding published data for the production service."@en;
+    skos:notation "dataservers";
+    dms:tierRole "dataServers";
+    dms:graphEndpoint   "http://{address}:3030/ds/data";
+    dms:updateEndpoint  "http://{address}:3030/ds/update";
+    dms:queryEndpoint  "http://{address}:3030/ds/query";
+    dms:loadBalancer  :pdataLB;
+#    dms:testServerAction "dataserver/testServer";
+    dms:configureAction "bwq/dataserver/configure";
+    dms:allocateAction "bwq/dataserver/allocate";
+    dms:terminateAction "bwq/dataserver/terminate";
+    dms:parallelPublish true ;
+    .
+
+:pdataLB a dms:LoadBalancer;
+    rdfs:label "Production Data LB"@en;
+    rdfs:comment "Load balancer for the production data server tier"@en;
+    # Use only the default actions
+    .
+
+:testingPubServers a dms:Tier;
+    rdfs:label "Data servers in testing"@en;
+    dct:description "Data servers holding published data for the testing service."@en;
+    skos:notation "dataservers";
+    dms:tierRole "dataServers";
+    dms:graphEndpoint   "http://{address}:3030/ds/data";
+    dms:updateEndpoint  "http://{address}:3030/ds/update";
+    dms:queryEndpoint  "http://{address}:3030/ds/query";
+    dms:loadBalancer  :tdataLB;
+#    dms:testServerAction "dataserver/testServer";
+    dms:configureAction "bwq/dataserver/configure";
+    dms:allocateAction "bwq/dataserver/allocate";
+    dms:terminateAction "bwq/dataserver/terminate";
+    dms:parallelPublish true ;
+    .
+
+:tdataLB a dms:LoadBalancer;
+    rdfs:label "Testing Data LB"@en;
+    rdfs:comment "Load balancer for the testing data server tier"@en;
+    # Use only the default actions
+    .    
+
+:pPresServers a dms:Tier;
+    rdfs:label "Presentation servers in production"@en;
+    skos:notation "presServers";
+    dms:tierRole "presentationServers";
+    dms:loadBalancer  :pPresLB;
+    dms:configureAction "bwq/presserver/configure";
+    dms:allocateAction "bwq/pres-production/allocate";
+    dms:terminateAction "bwq/presserver/terminate";
+    dms:operation :clearCacheOp, :webSyncOp;
+    .    
+
+:pPresLB a dms:LoadBalancer;
+    rdfs:label "Production Presentation LB"@en;
+    rdfs:comment "Load balancer for the production presentation tier"@en;
+    .    
+
+:tPresServers a dms:Tier;
+    rdfs:label "Presentation servers in testing"@en;
+    skos:notation "presServers";
+    dms:tierRole "presentationServers";
+    dms:loadBalancer  :tPresLB;
+    dms:configureAction "bwq/presserver/configure";
+    dms:allocateAction "bwq/presserver/allocate";
+    dms:terminateAction "bwq/presserver/terminate";
+    dms:operation :clearCacheOp, :webSyncOp;
+    .    
+
+:clearCacheOp
+    rdfs:label "Clear caches";
+    rdfs:comment "Clear the caches for this tier";
+    dms:action "bwq/clearCache";
+    skos:notation "clearCacheOp";
+    dms:tierOnly true;
+    .
+
+:webSyncOp
+    rdfs:label "Web sync";
+    rdfs:comment "Synchronize shared web content";
+    dms:action "bwq/webSync";
+    skos:notation "webSyncOp";
+    dms:tierOnly true;
+    .
+
+:tPresLB a dms:LoadBalancer;
+    rdfs:label "Testing presentation LB"@en;
+    rdfs:comment "Load balancer for the testing presentation tier"@en;
+    .    
+
+# -- Base images --------------------------------
+
+:productionBaseline a dms:image;
+#    dms:dumpFile   "/var/opt/dms/services/bwq/publicationSets/production/images/baseline-2014-10-02.nq.gz";
+#    dms:dbLocation "/var/opt/dms/services/bwq/publicationSets/production/images/baseline-2014-10-02.DB.tgz";
+    dms:dumpFile   "/var/opt/dms/services/bwq/publicationSets/production/images/baseline-2014-10-02-noprofile.nq.gz";
+    dms:dbLocation "/var/opt/dms/services/bwq/publicationSets/production/images/baseline-2014-10-02-noprofile.DB.tgz";
+    dms:effectiveDate "2014-10-02T10:18:00Z"^^xsd:dateTime;
+    .
+
+:testBaseline a dms:image;
+    dms:dumpFile   "/var/opt/dms/services/bwq/publicationSets/production/images/baseline-2014-10-02-noprofile.nq.gz";
+    dms:dbLocation "/var/opt/dms/services/bwq/publicationSets/production/images/baseline-2014-10-02-noprofile.DB.tgz";
+#    dms:dumpFile   "/var/opt/dms/services/bwq/publicationSets/testing/images/baseline-2014-08-01-noprofile.nq.gz";
+#    dms:dbLocation "/var/opt/dms/services/bwq/publicationSets/testing/images/baseline-2014-08-01-noprofile.DB.tgz";
+    dms:effectiveDate "2014-08-01T10:18:00Z"^^xsd:dateTime;
+    .

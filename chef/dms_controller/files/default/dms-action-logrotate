@@ -1,0 +1,10 @@
+/var/opt/dms/log/*.log {
+    weekly
+    missingok
+    rotate 7
+    compress
+    delaycompress
+    notifempty
+    nocreate
+    copytruncate
+}

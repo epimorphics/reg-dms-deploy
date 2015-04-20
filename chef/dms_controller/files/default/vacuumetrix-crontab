@@ -1,0 +1,2 @@
+# Run metric collection from AWS every 2 mins
+*/2 * * * * ubuntu /usr/bin/ruby /opt/vacuumetrix/bin/AWScloudwatchELB.rb > /dev/null 2>&1

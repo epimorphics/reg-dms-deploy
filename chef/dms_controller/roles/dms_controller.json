@@ -1,0 +1,11 @@
+{
+   "name": "dms_controller",
+   "description": "DMS Controller",
+   "json_class": "Chef::Role",
+   "chef_type": "role",
+   "run_list": [
+       "recipe[dms_controller]"
+   ],
+   "env_run_lists":{
+   }
+}
