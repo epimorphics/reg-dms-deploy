@@ -13,4 +13,4 @@ serverDir=deployment
 
 IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
 cd chef/dms_controller
-knife solo cook -o "recipe[dms_controller_base::dms_conf]" ubuntu@$IP ../../deployment/node.json --identity-file $AWS_KEY --yes --no-color
+knife solo cook -o "recipe[dms_controller::dms_conf]" ubuntu@$IP ../../deployment/node.json --identity-file $AWS_KEY --yes --no-color
