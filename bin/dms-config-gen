@@ -3,8 +3,8 @@
 
 . bin/lib/config.sh
 
-echo "Host $name"
-echo "    HostName     ${PREFIX}-dms"
+echo "Host ${PREFIX}-dms"
+echo "    HostName     $(jq -r .public < deployment/config.json)"
 echo "    User         ubuntu"
 echo "    IdentityFile ~/.aws/$PREFIX.pem"
 echo ""
