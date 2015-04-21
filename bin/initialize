@@ -62,6 +62,7 @@ echo "** Customize runtime scripts"
 installTemplate backupNRC runtime/bin/backupNRC
 installTemplate dms-aws-refresh runtime/bin/dms-aws-refresh
 installTemplate dms-rebuild-server-s3-state runtime/bin/dms-rebuild-server-s3-state
+chmod +x runtime/bin/*
 
 echo "** Install initial NRC configuration"
 aws s3 cp provision/nagios/nrc_setup.tgz $BUCKET/nagrestconf/nrc_setup.tgz
