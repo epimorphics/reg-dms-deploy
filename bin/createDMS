@@ -38,4 +38,4 @@ AttachENI $serverDir $MONITOR_NET_IF
 InstallChefSolo "$serverDir" chef
 IP=$(jq -r ".Instances[0].PublicDnsName" < $inst_file)
 cd chef
-knife solo cook ubuntu@$IP ../$serverDir/node.json --identity-file /var/opt/dms/.ssh/lds.pem --yes --no-color
+knife solo cook ubuntu@$IP ../$serverDir/node.json --identity-file $AWS_KEY --yes --no-color
