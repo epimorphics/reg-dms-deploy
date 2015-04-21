@@ -49,3 +49,6 @@ cp $AWS_CONF_FILE bin/lib/config.sh
 
 echo "** Customize the chef installation"
 cat templates/chef-config.rb | sed -e "s|{prefix}|$PREFIX|" > chef/dms_controller/attributes/default.rb
+
+echo "** Install initial NRC configuration"
+aws s3 cp provision/nagios/nrc_setup.tgz $BUCKET/nagrestconf/nrc_setup.tgz
