@@ -43,11 +43,8 @@ rm tmp/vacuumetrix-credential.rb
 
 echo "** Instantiate and copy the AWS configuration into the script areas"
 AWS_CONF_FILE=runtime/conf/scripts/config.sh
-cp conf/aws-config.sh $AWS_CONF_FILE
-sed -i $AWS_CONF_FILE -e "s|{prefix}|$PREFIX|"
+cat conf/aws-config.sh | sed -e "s|{prefix}|$PREFIX|" > $AWS_CONF_FILE
 cp $AWS_CONF_FILE bin/lib/config.sh
 
 echo "** Customize the chef installation"
-CHEF_CONF_FILE=chef/dms_controller/attributes/default.rb
-cp templates/chef-config.rb $CHEF_CONF_FILE
-sed -i $CHEF_CONF_FILE -e "s|{prefix}|$PREFIX|"
+cat templates/chef-config.rb | sed -e "s|{prefix}|$PREFIX|" > chef/dms_controller/attributes/default.rb
