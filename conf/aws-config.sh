@@ -27,4 +27,4 @@ readonly AMI_UBUNTU_INSTANCE=ami-3b69b84c   # ubuntu 14.04, 64bit, instance root
 readonly AMI_UBUNTU_HVM=ami-c5bf2eb2        # ubuntu 14.04, 64bit, HVM (for use with t2)
 
 readonly PREFIX={prefix}
-readonly AWS_DEFAULT_PROFILE=nrw
+readonly AWS_DEFAULT_PROFILE={prefix}
