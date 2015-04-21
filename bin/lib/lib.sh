@@ -1,7 +1,7 @@
 #!/bin/bash
 # Library of utilities used in DMS automation
 
-readonly SSH_FLAGS="-4 -o BatchMode=yes -o StrictHostKeyChecking=no"
+. bin/lib/config.sh
 
 # Wait until an aws operation reaches a target state
 # WaitFor $command $jqpattern $target
@@ -45,9 +45,9 @@ ShellProvision() {
 	local IP=$(jq -r ".Instances[0].PublicDnsName" < $server/aws-instance.json)
 
 	echo " - syncing provisioning data to $IP"
-	rsync -avz -e "ssh $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem"  --rsync-path="sudo rsync" $source "ubuntu@$IP:/dmsprovision/"
+	rsync -avz -e "ssh $SSH_FLAGS -i $AWS_KEY"  --rsync-path="sudo rsync" $source "ubuntu@$IP:/dmsprovision/"
 	echo " - running provisioning script $boot from source $source"
-	ssh -4 -t -t -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP "sudo sh /dmsprovision/$boot"
+	ssh -4 -t -t -i $AWS_KEY -l ubuntu $IP "sudo sh /dmsprovision/$boot"
 }
 
 # Wait for ssh connection to become available on the aws instance
@@ -59,7 +59,7 @@ WaitForSsh() {
 	local loop=1
 	while [[ $loop -le 10 ]]
 	do
-		if ssh $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP  "echo ssh up"; then
+		if ssh $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP  "echo ssh up"; then
 			return 0
 		fi
 		sleep 8
@@ -136,7 +136,7 @@ AllocateServer() {
         --image-id "$AWS_AMI" \
         --instance-type "$AWS_INSTANCE_TYPE" \
         --security-group-ids $AWS_SG \
-        --key-name "lds" \
+        --key-name "$PREFIX" \
         --associate-public-ip-address \
         --subnet-id "$VPC" \
         $iamRole \
@@ -186,7 +186,7 @@ InstallChef() {
     fi
     IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
     echo "Bootstrapping chef: env=${CHEF_ENV:-dms} role=$CHEF_ROLE config={$config}"
-    knife bootstrap  -i /var/opt/dms/.ssh/lds.pem -x ubuntu --sudo \
+    knife bootstrap  -i $AWS_KEY -x ubuntu --sudo \
                 -E "${CHEF_ENV:-dms}" -r "$CHEF_ROLE" \
                 -j "{$config}" \
                 -N $FULL_NAME "$IP" -F min --no-color \
@@ -207,7 +207,7 @@ InstallChefSolo() {
 
     IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
     echo "Installing chef solo to $IP"
-    knife solo prepare "ubuntu@$IP" -N "$FULL_NAME" --identity-file /var/opt/dms/.ssh/lds.pem --yes  --no-color
+    knife solo prepare "ubuntu@$IP" -N "$FULL_NAME" --identity-file $AWS_KEY --yes  --no-color
     mv nodes/$FULL_NAME.json $serverDir/node-orig.json
 
 	# Set up node file to correspond to a single top level role
