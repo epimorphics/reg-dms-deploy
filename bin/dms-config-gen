@@ -1,7 +1,13 @@
 #!/bin/bash
 # Create a set of .ssh/config definitions from the S3 saved state
 
-. lib/config.sh
+. bin/lib/config.sh
+
+echo "Host $name"
+echo "    HostName     ${PREFIX}-dms"
+echo "    User         ubuntu"
+echo "    IdentityFile ~/.aws/$PREFIX.pem"
+echo ""
 
 readonly WORK="/tmp/lds-config-gen-$RANDOM"
 for i in $( aws s3 ls --recursive "$S3_STATE/" | awk '{print $4}' | grep config.json )
@@ -12,7 +18,7 @@ do
     echo "Host $name"
     echo "    HostName     $host"
     echo "    User         ubuntu"
-    echo "    IdentityFile $AWS_KEY
+    echo "    IdentityFile $AWS_KEY"
     echo ""
 done
 rm -f $WORK
