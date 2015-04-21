@@ -3,11 +3,11 @@
 
 . bin/lib/config.sh
 
-echo "Host ${PREFIX}-dms"
-echo "    HostName     $(jq -r ".Instances[0].PublicDnsName" < deployment/aws-instance.json)"
-echo "    User         ubuntu"
-echo "    IdentityFile ~/.ssh/$PREFIX.pem"
-echo ""
+#echo "Host ${PREFIX}-dms"
+#echo "    HostName     $(jq -r ".Instances[0].PublicDnsName" < deployment/aws-instance.json)"
+#echo "    User         ubuntu"
+#echo "    IdentityFile ~/.ssh/$PREFIX.pem"
+#echo ""
 
 readonly WORK="/tmp/lds-config-gen-$RANDOM"
 for i in $( aws s3 ls --recursive "$S3_STATE/" | awk '{print $4}' | grep config.json )

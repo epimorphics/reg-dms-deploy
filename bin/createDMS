@@ -8,8 +8,7 @@ set -o errexit
 CheckInstalls
 
 serverDir=deployment
-NAME="dms"
-FULL_NAME="dms-controller"
+FULL_NAME="$PREFIX-dms-controller"
 
 mkdir -p $serverDir
 

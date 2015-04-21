@@ -16,3 +16,6 @@ node.override['dms_controller']['conf_repo']     = "https://github.com/epimorphi
 # by vacuumetrix and fed in to grpahite/carbon store
 # This information won't be known until after a service has been deployed
 node.override['dms_controller']['monitor_LBs']    = ''
+
+# The grafana dashboards to install, each name should correspond to a file "grafana-dashboard-{name}.json"
+node.override['dms_controller']['grafana_dashboards'] = ['dms']

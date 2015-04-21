@@ -94,7 +94,6 @@ BlockDeviceMappings() {
 # Arguments:
 #    AllocateServer infoDir
 # Environment settings:
-#    NAME                     short name for the server
 #    FULL_NAME                full, unique name for the server
 #    AWS_INSTANCE_TYPE        instance type to create
 #    AWS_AMI                  AMI to use
@@ -171,7 +170,6 @@ AllocateServer() {
 # Arguments:
 #    InstallChef infoDir
 # Environment settings:
-#    NAME                     short name for the server
 #    FULL_NAME                full, unique name for the server
 #    CHEF_ENV     chef environment for the node
 #    CHEF_ROLE    name of the top level role for this node
@@ -197,7 +195,6 @@ InstallChef() {
 # Arguments:
 #    InstallChefSolo infoDir chefDir
 # Environment settings:
-#    NAME                     short name for the server
 #    FULL_NAME                full, unique name for the server
 #    CHEF_ROLE  name of the top level role for this instance
 InstallChefSolo() {

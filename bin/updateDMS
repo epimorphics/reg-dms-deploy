@@ -7,8 +7,8 @@ set -o errexit
 . bin/lib/lib.sh
 CheckInstalls
 
-NAME="dms"
-FULL_NAME="dms-controller"
+FULL_NAME="$PREFIX-dms-controller"
+
 serverDir=deployment
 
 IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
