@@ -4,7 +4,7 @@
 . bin/lib/config.sh
 
 echo "Host ${PREFIX}-dms"
-echo "    HostName     $(jq -r .public < deployment/config.json)"
+echo "    HostName     $(jq -r ".Instances[0].PublicDnsName" < deployment/aws-instance.json)"
 echo "    User         ubuntu"
 echo "    IdentityFile ~/.ssh/$PREFIX.pem"
 echo ""
