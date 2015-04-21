@@ -13,7 +13,7 @@ installTemplate() {
     [[ $# = 2 ]] || { echo "Usage: installTemplate filename target" ; exit 1 ; }
     local src="templates/$1"
     local dest="$2"
-    cp $src | sed -e "s|{prefix}|$PREFIX|" > $dest
+    cat $src | sed -e "s|{prefix}|$PREFIX|" > $dest
 }
 
 if ! grep -q "$PREFIX" ~/.aws/credentials ; then
