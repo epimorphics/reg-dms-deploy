@@ -6,7 +6,7 @@
 echo "Host ${PREFIX}-dms"
 echo "    HostName     $(jq -r .public < deployment/config.json)"
 echo "    User         ubuntu"
-echo "    IdentityFile ~/.aws/$PREFIX.pem"
+echo "    IdentityFile ~/.ssh/$PREFIX.pem"
 echo ""
 
 readonly WORK="/tmp/lds-config-gen-$RANDOM"
