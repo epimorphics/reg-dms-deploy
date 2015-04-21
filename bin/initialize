@@ -8,6 +8,14 @@ ACCESS_KEY="$2"
 SECRET_KEY="$3"
 PEM_FILE="$4"
 
+# installTemplate filename targetDir
+installTemplate() {
+    [[ $# = 2 ]] || { echo "Usage: installTemplate filename target" ; exit 1 ; }
+    local src="templates/$1"
+    local dest="$2"
+    cp $src | sed -e "s|{prefix}|$PREFIX|" > $dest
+}
+
 if ! grep -q "$PREFIX" ~/.aws/credentials ; then
     echo "** Add credentials to ~/.aws/credentials"
     mkdir -p ~/.aws
@@ -48,7 +56,12 @@ sed -i $AWS_CONF_FILE -e "s|{key}|~/.ssh/$PREFIX.pem|"
 cp $AWS_CONF_FILE bin/lib/config.sh
 
 echo "** Customize the chef installation"
-cat templates/chef-config.rb | sed -e "s|{prefix}|$PREFIX|" > chef/dms_controller/attributes/default.rb
+installTemplate chef-config.rb chef/dms_controller/attributes/default.rb
+
+echo "** Customize runtime scripts"
+installTemplate backupNRC runtime/bin/backupNRC
+installTemplate dms-aws-refresh runtime/bin/dms-aws-refresh
+installTemplate dms-rebuild-server-s3-state runtime/bin/dms-rebuild-server-s3-state
 
 echo "** Install initial NRC configuration"
 aws s3 cp provision/nagios/nrc_setup.tgz $BUCKET/nagrestconf/nrc_setup.tgz

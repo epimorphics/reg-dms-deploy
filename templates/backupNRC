@@ -4,5 +4,5 @@
 
 cd /etc/nagios3/objects/local/setup
 tar czf /tmp/nrc_setup.tgz  *.setup
-aws s3 cp /tmp/nrc_setup.tgz s3://dms-deploy/nagrestconf/
+aws s3 cp /tmp/nrc_setup.tgz s3://{prefix}-dms-deploy/nagrestconf/
 sudo mv /tmp/nrc_setup.tgz /home/ubuntu/deploy

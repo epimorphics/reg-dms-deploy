@@ -25,6 +25,6 @@ fi
 
 # Update copy on S3
 if [[ $serverDir =~ /var/opt/dms/(.*) ]]; then
-    s3key="s3://dms-deploy/dms-state/${BASH_REMATCH[1]}"
+    s3key="s3://{prefix}-dms-deploy/dms-state/${BASH_REMATCH[1]}"
     aws cp "$serverDir/config.json" "$s3key/config.json"
 fi
