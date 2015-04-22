@@ -14,7 +14,7 @@ for server in $serversDir/servers/*
 do
     if grep -qv Terminated $server/status 
     then
-        FLAGS="$SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem"
+        FLAGS="$SSH_FLAGS -i $AWS_KEY"
         IP=$( jq -r .address "$server/config.json" )
         echo "Clear cache on $server"
         ssh -t -t $FLAGS -l ubuntu $IP sudo /usr/local/bin/ps_cache_clean 

@@ -16,7 +16,7 @@ for server in $serversDir/servers/*
 do
     if grep -qv Terminated $server/status 
     then
-        FLAGS="$SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem"
+        FLAGS="$SSH_FLAGS -i $AWS_KEY"
         echo "Sync to $server"
         IP=$( jq -r .address "$server/config.json" )
         rsync -a --delete -e "ssh $FLAGS" * ubuntu@$IP:/var/www/environment/html

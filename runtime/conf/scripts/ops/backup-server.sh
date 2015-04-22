@@ -14,16 +14,16 @@ readonly server=$( basename $serverDir )
 IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
 
 echo "Starting backup on server $server"
-remoteFile=$( ssh $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP "bash /usr/local/bin/dbbackup" )
+remoteFile=$( ssh $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP "bash /usr/local/bin/dbbackup" )
 filename="$server-$( basename $remoteFile )"
 
 echo "Finished, transfering file to control server"
 mkdir -p $serverDir/../../../../images
 cd $serverDir/../../../../images
-scp -Cq $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem ubuntu@${IP}:$remoteFile $filename
+scp -Cq $SSH_FLAGS -i $AWS_KEY ubuntu@${IP}:$remoteFile $filename
 
 echo "Removing backup from server $server"
-ssh $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP "sudo rm $remoteFile"
+ssh $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP "sudo rm $remoteFile"
 
 echo "Counting backup size to record in metrics"
 size=$( gunzip -c $filename | wc -l)

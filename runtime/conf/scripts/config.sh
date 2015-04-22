@@ -1,10 +1,12 @@
 # AWS Configuration information
 
 # VPC configuration
-readonly SG_BACK_END=sg-b6a5f3d3            # security group for lds-back-end
-readonly SG_FRONT_END=sg-61a2f404           # security group for lds-front-end
-readonly VPC_PUBLIC_B=subnet-4bf99d2e       # public subnet for LDS VPC
-readonly VPC_PUBLIC_C=subnet-5db9352a       # public subnet for LDS VPC
+readonly SG_BACK_END=sg-b6a5f3d3            # security group for dms-backend
+readonly SG_FRONT_END=sg-61a2f404           # security group for dms-frontend
+readonly SG_CONTROL=sg-eea5f38b             # security group for dms-control
+
+readonly VPC_PUBLIC_B=subnet-4bf99d2e       # public subnet for DMS VPC
+readonly VPC_PUBLIC_C=subnet-5db9352a       # public subnet for DMS VPC
 readonly VPC_PUBLIC=( $VPC_PUBLIC_B $VPC_PUBLIC_C )
 
 # Interfaces
@@ -16,7 +18,8 @@ readonly MONITOR_NET_IF="eni-76e98f00"
 readonly AWS_DMS_ROLE="arn:aws:iam::828737851284:instance-profile/dms-automation"
 
 # Location where the configuration state should be preserved
-readonly S3_STATE="s3://nrw-dms-deploy/dms-state"
+readonly S3_BUCKET="s3://nrw-dms-deploy"
+readonly S3_STATE="$S3_BUCKET/dms-state"
 
 # Other AWS defaults
 export AWS_DEFAULT_REGION=eu-west-1
@@ -25,4 +28,14 @@ readonly AMI_UBUNTU_INSTANCE=ami-3b69b84c   # ubuntu 14.04, 64bit, instance root
 readonly AMI_UBUNTU_HVM=ami-c5bf2eb2        # ubuntu 14.04, 64bit, HVM (for use with t2)
 
 readonly PREFIX=nrw
-readonly AWS_DEFAULT_PROFILE=nrw
+# export AWS_DEFAULT_PROFILE=nrw
+
+# Nagrestconf location, normally on DMS controller machine
+readonly NRC_HOST=127.0.0.1                 
+
+# Suppress SSH known key checking
+export SSH_FLAGS="-q -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+
+# Location of AWS access key
+readonly AWS_KEY=~/.ssh/nrw.pem
+

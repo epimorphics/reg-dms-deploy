@@ -10,7 +10,7 @@ set -o errexit
 
 readonly tierDir=$1
 
-FLAGS="$SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem"
+FLAGS="$SSH_FLAGS -i $AWS_KEY"
 
 for server in $tierDir/servers/*
 do

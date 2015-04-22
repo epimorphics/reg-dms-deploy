@@ -10,7 +10,7 @@ set -o errexit
 readonly serverDir=$1
 
 IP=$(jq -r ".address" < $serverDir/config.json)
-FLAGS="$SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem"
+FLAGS="$SSH_FLAGS -i $AWS_KEY"
 
 echo "Calling dms-update on $serverDir"
 ssh -t -t $FLAGS -l ubuntu $IP /bin/bash /usr/local/bin/dms-update --perform

@@ -11,4 +11,4 @@ serverDir="/var/opt/dms/$1/servers/$2"
 IP=$( jq -r .address "$serverDir/config.json" )
 
 echo "Calling dms-update on $serverDir"
-ssh -t -t $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP /bin/bash /usr/local/bin/dms-update --perform
+ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP /bin/bash /usr/local/bin/dms-update --perform
