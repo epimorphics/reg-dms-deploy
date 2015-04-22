@@ -54,6 +54,7 @@ AWS_CONF_FILE=runtime/conf/scripts/config.sh
 cat conf/aws-config.sh | sed -e "s|{prefix}|$PREFIX|" > $AWS_CONF_FILE
 sed -i $AWS_CONF_FILE -e "s|{key}|~/.ssh/$PREFIX.pem|"
 cp $AWS_CONF_FILE bin/lib/config.sh
+sed -i $AWS_CONF_FILE -e "s|export AWS_DEFAULT_PROFILE|# export AWS_DEFAULT_PROFILE|"
 
 echo "** Customize the chef installation"
 installTemplate chef-config.rb chef/dms_controller/attributes/default.rb
