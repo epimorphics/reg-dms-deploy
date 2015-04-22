@@ -16,3 +16,9 @@ node.override['dms_controller']['conf_repo']     = "https://github.com/epimorphi
 # by vacuumetrix and fed in to grpahite/carbon store
 # This information won't be known until after a service has been deployed
 node.override['dms_controller']['monitor_LBs']    = ''
+
+# Baseline data and media
+node.override['dms_controller']['testing_baseline_images']    = [  ]
+node.override['dms_controller']['testing_web_snapshot']       = ''
+node.override['dms_controller']['production_baseline_images'] = [ ]
+node.override['dms_controller']['production_web_snapshot']    = ''

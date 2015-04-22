@@ -1,9 +1,11 @@
 #
 # Cookbook Name:: dms_controller
-# Recipe:: lds
+# Recipe:: nrw
 #
 # Copyright (C) 2014 Epimorphics Ltd
 #
+
+prefix       = "#{node['dms_controller']['prefix']}"
 
 # Starting data images
 ['testing', 'production'].each do |envname|
@@ -18,7 +20,7 @@
         bash "Install baseline image #{img} to #{envname}" do
             code <<-EOH
             cd /var/opt/dms/services/bwq/publicationSets/#{envname}/images
-            aws s3api get-object --bucket dms-deploy --key baseline/#{img} #{img}
+            aws s3api get-object --bucket #{prefix}-dms-deploy --key baseline/#{img} #{img}
             chown tomcat7:tomcat7  #{img}
             chmod 0644  #{img}
             EOH
@@ -41,7 +43,7 @@ end
     bash "Fetch web content for #{envname}" do
         code <<-EOH
         cd #{node['epi_base']['deploy_files_dir']}
-        aws s3api get-object --bucket dms-deploy --key baseline/#{img} #{img}
+        aws s3api get-object --bucket #{prefix}-dms-deploy --key baseline/#{img} #{img}
         EOH
         not_if { File.exists?("#{node['epi_base']['deploy_files_dir']}/#{img}") }
     end
