@@ -58,9 +58,9 @@ ShellProvision() {
     local IP=$(jq -r ".Instances[0].PublicDnsName" < $server/aws-instance.json)
 
     echo " - syncing provisioning data"
-    rsync -avz -e "ssh $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem"  --rsync-path="sudo rsync" $source "ubuntu@$IP:/dmsprovision/"
+    rsync -avz -e "ssh $SSH_FLAGS -i $AWS_KEY"  --rsync-path="sudo rsync" $source "ubuntu@$IP:/dmsprovision/"
     echo " - running provisioning script"
-    ssh $SSH_FLAGS -t -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP "sudo sh /dmsprovision/bootstrap.sh"
+    ssh $SSH_FLAGS -t -i $AWS_KEY -l ubuntu $IP "sudo sh /dmsprovision/bootstrap.sh"
 }
 
 # Wait for ssh connection to become available on the aws instance
@@ -72,7 +72,7 @@ WaitForSsh() {
     local loop=1
     while [[ $loop -le 10 ]]
     do
-        if ssh $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP  "echo ssh up"; then
+        if ssh $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP  "echo ssh up"; then
             return 0
         fi
         sleep 8
@@ -173,7 +173,7 @@ AllocateServer() {
         --image-id "$AWS_AMI" \
         --instance-type "$AWS_INSTANCE_TYPE" \
         --security-group-ids $AWS_SG \
-        --key-name "lds" \
+        --key-name "$PREFIX" \
         --associate-public-ip-address \
         --subnet-id "$VPC" \
         $iamRole \
@@ -223,7 +223,7 @@ InstallChef() {
     fi
     IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
     echo "Bootstrapping chef: env=$CHEF_ENV role=$CHEF_ROLE config={$config}"
-    knife bootstrap -c /var/opt/dms/.chef/knife.rb -i /var/opt/dms/.ssh/lds.pem -x ubuntu --sudo \
+    knife bootstrap -c /var/opt/dms/.chef/knife.rb -i $AWS_KEY -x ubuntu --sudo \
                 -E "$CHEF_ENV" -r "$CHEF_ROLE" \
                 -j "{$config}" \
                 -N $FULL_NAME "$IP" -F min --no-color \
@@ -243,7 +243,7 @@ InstallChefSolo() {
     local chefDir=$2
 
     IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
-    knife solo prepare "ubuntu@$IP" -N "$FULL_NAME" --identity-file /var/opt/dms/.ssh/lds.pem --yes  --no-color
+    knife solo prepare "ubuntu@$IP" -N "$FULL_NAME" --identity-file $AWS_KEY --yes  --no-color
     mv nodes/$FULL_NAME.json $serverDir/node-orig.json
 
     # Set up node file to correspond to a single top level role
