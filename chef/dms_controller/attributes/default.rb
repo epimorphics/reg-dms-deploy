@@ -18,7 +18,7 @@ node.override['dms_controller']['conf_repo']     = "https://github.com/epimorphi
 node.override['dms_controller']['monitor_LBs']    = ''
 
 # Baseline data and media
-node.override['dms_controller']['testing_baseline_images']    = [  ]
-node.override['dms_controller']['testing_web_snapshot']       = ''
-node.override['dms_controller']['production_baseline_images'] = [ ]
-node.override['dms_controller']['production_web_snapshot']    = ''
+node.override['dms_controller']['baseline']['nrwbwq']['testing_baseline_images']    = [  ]
+node.override['dms_controller']['baseline']['nrwbwq']['testing_web_snapshot']       = ''
+node.override['dms_controller']['baseline']['nrwbwq']['production_baseline_images'] = [ ]
+node.override['dms_controller']['baseline']['nrwbwq']['production_web_snapshot']    = ''

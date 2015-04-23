@@ -15,6 +15,11 @@ Ubuntu 14.04
 
 ## Attributes
 
+Attribute | Type | Usage
+---|---|---
+`baseline` | Hash of image configurations indexed by service name | Provides for installation of baseline images and web content associated with the named DMS data service.
+`baseline.{servicename}.{env}_baseline_images` | List of strings | Gives a list of file names to be installed from the baseline folder in the dms_deploy S3 bucket. Where `{env}` various over `testing` and `production`.
+`baseline.{servicename}.{env}_web_snapshot` | String | File name for tgz package of web content to be installed from the baseline folder in the dms_deploy S3 bucket. Where `{env}` various over `testing` and `production`.
 
 ## Usage
 
