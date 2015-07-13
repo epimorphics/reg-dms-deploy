@@ -1,5 +1,5 @@
 {       
-    "name" : "test-skos",
+    "name" : "general/test-skos",
     "description" : "Template to convert labeled codes to skos at fixed base location",
     "type" : "Composite",
     "required" : ["label"],
@@ -13,6 +13,6 @@
         "bind" : { 
             "notation" : "{label.toSegment()}"
             },
-        "template" : "simple-skos"
+        "template" : "general/simple-skos"
     }
 }

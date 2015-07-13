@@ -1,7 +1,7 @@
 #!/bin/bash
-# Post-publication actions for the BWQ service
+# Post-publication actions for the epr service
 # Arguments:
-#     serversDir (for data servers)
+#     serversDir 
 
 
 set -o errexit
@@ -12,14 +12,14 @@ readonly serversDir="/var/opt/dms/$1"
 
 echo "Synchronizing web content, including source/dump files"
 cd $serversDir/../../Web
-for server in ../tiers/presServers/servers/* 
+for server in $serversDir/servers/* 
 do
     if grep -qv Terminated $server/status 
     then
-        FLAGS="$SSH_FLAGS -i $AWS_KEY"
+        FLAGS="$SSH_FLAGS -i /var/opt/dms/.ssh/${PREFIX}.pem"
         echo "Sync to $server"
         IP=$( jq -r .address "$server/config.json" )
-        rsync -a --delete -e "ssh $FLAGS" * ubuntu@$IP:/var/www/environment/html
+        rsync -a --delete -e "ssh $FLAGS" * ubuntu@$IP:/var/www/html
 
         echo "Clear caches"
         ssh -t -t $FLAGS -l ubuntu $IP sudo /usr/local/bin/ps_cache_clean 
