@@ -97,8 +97,10 @@
     dms:terminateAction "default/terminate";
     dms:parallelPublish true ;
     dms:externalState  true;
-    dms:loadStateAction "ts/loadState";
+    dms:loadStateAction "generic/loadState";
     dms:catchupStateAction "generic/catchupState";
+    dms:publishStateAction "generic/publishState";
+    dms:publishAction      "generic/dupublish";
     dms:operation :clearCacheOp;
     .
 
@@ -116,10 +118,11 @@
     dms:terminateAction "default/terminate";
     dms:parallelPublish true ;  # Irrelevant due to next line
     dms:externalState  true;
-    dms:loadStateAction "ts/loadState";
+    dms:externalState  true;
+    dms:loadStateAction "generic/loadState";
     dms:catchupStateAction "generic/catchupState";
-    dms:publishStateAction "generic/dupublishState";
-    dms:publishAction      "generic/dupublish";           # TODO - check
+    dms:publishStateAction "generic/publishState";
+    dms:publishAction      "generic/dupublish";
     dms:operation :clearCacheOp;
     .
 

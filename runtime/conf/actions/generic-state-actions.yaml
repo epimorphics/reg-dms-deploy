@@ -15,6 +15,12 @@
     -  "serverDir"
 ---
 # Publish via S3 upload
+"@name" : generic/publishState
+"@type" : script
+"@script" : "ops/duPublishState.sh"
+"@args" : json
+---
+# Perform the actual publication step - effectively a catchup state request
 "@name" : generic/dupublish
 "@type" : script
 "@script" : "ops/duPublish.sh"
