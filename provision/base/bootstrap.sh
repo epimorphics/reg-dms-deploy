@@ -45,6 +45,6 @@ if blkid $EBS_DEV > /dev/null; then
 fi
 
 # Basic packages - probably should leave these to chef but can't see how
-apt-get -q update -y
-apt-get -q upgrade -y
+apt-get -q -y update
+apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -q -y upgrade
 locale-gen en_GB.UTF-8
