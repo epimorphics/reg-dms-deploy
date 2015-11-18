@@ -6,7 +6,10 @@
 #
 
 deploy "#{node['epi_base']['deploy_files_dir']}/dms-conf" do
-    repo "#{node['dms_controller']['conf_repo']}"
+    repo "#{node['dms_controller']['conf_repo']}" 
+if node['dms_controller']['conf_repo_is_private']
+    ssh_wrapper "#{node['epi_base']['deploy_files_dir']}/wrap-ssh4git.sh" 
+end
     symlink_before_migrate ({})
     symlinks ({})
     user user
