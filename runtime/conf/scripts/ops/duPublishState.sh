@@ -4,11 +4,12 @@
 [[ $# = 1 ]] || { echo "duPublishState pubspec-json" 1>&2 ; exit 1 ; }
 
 readonly spec="$1"
+readonly pubset=$(echo $spec | jq -r .pubset)
 
 . ./config.sh
 
 STATE_FOLDER="$S3_BUCKET/images/$PREFIX"
-BUCKET="$STATE_FOLDER/updates/$( date +%F )/$( date '+%H-%M-%S-%N')"
+BUCKET="$STATE_FOLDER/$pubset/updates/$( date +%F )/$( date '+%H-%M-%S-%N')"
 
 touch /tmp/empty
 
