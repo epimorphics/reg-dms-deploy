@@ -133,7 +133,7 @@
           },
           "targets": [
             {
-              "target": "serverMetrics.dms.*.load.load.shortterm"
+              "target": "serverMetrics.reg.dms.*.load.load.shortterm"
             }
           ],
           "aliasColors": {},
@@ -195,7 +195,7 @@
           },
           "targets": [
             {
-              "target": "serverMetrics.dms.*.memory.memory-used"
+              "target": "serverMetrics.reg.dms.*.memory.memory-used"
             }
           ],
           "aliasColors": {},
@@ -257,7 +257,7 @@
           },
           "targets": [
             {
-              "target": "serverMetrics.dms.*.df-root.df_complex-free"
+              "target": "serverMetrics.reg.dms.*.df-root.df_complex-free"
             }
           ],
           "aliasColors": {},
@@ -319,7 +319,7 @@
           },
           "targets": [
             {
-              "target": "serverMetrics.dms.*.df-mnt-disk1.df_complex-free"
+              "target": "serverMetrics.reg.dms.*.df-mnt-disk1.df_complex-free"
             }
           ],
           "aliasColors": {},
@@ -381,7 +381,7 @@
           },
           "targets": [
             {
-              "target": "serverMetrics.dms.*.df-mnt-ephemeral0.df_complex-free"
+              "target": "serverMetrics.reg.dms.*.df-mnt-ephemeral0.df_complex-free"
             }
           ],
           "aliasColors": {},

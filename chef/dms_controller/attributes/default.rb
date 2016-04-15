@@ -7,7 +7,7 @@ node.override['dms_controller']['prefix']         = pre
 node.override['dms_controller']['server_name']    = "#{pre}-controller.epimorphics.net"
 
 # Set to true to enable TLS connections for the control server
-node.override['dms_controller']['use_https']      = false
+node.override['dms_controller']['use_https']      = true
 
 # The git repository containing the service configuration, scripts and UI templates
 node.override['dms_controller']['conf_repo']     = "https://github.com/epimorphics/#{pre}-dms-deploy.git"

@@ -1,0 +1,6 @@
+{
+  "address": "ec2-52-50-176-94.eu-west-1.compute.amazonaws.com",
+  "private": "10.0.1.170",
+  "public": "ec2-52-50-176-94.eu-west-1.compute.amazonaws.com",
+  "name": "reg-dms-controller"
+}
