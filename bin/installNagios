@@ -1,0 +1,19 @@
+#!/bin/bash
+# Script to provision nagios and nagrestconf on a configured DMS server
+# Assumes the .deb images have been installed by the nagrestconf recipe
+
+set -o errexit
+
+. bin/lib/lib.sh
+CheckInstalls
+
+serverDir=deployment
+
+IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
+
+# Package set up for manual installation
+cd provision/nagios/initial-config
+tar zcf ../nrc-setup.tgz .
+cd ../../..
+
+ShellProvision $serverDir provision/nagios/nagboot.sh

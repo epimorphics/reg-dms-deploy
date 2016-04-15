@@ -1,0 +1,16 @@
+#!/bin/bash
+# Run just the dms_conf recipe which updates the service config and actions
+# Since DMS should dynamically see those this avoids a server restart for simple changes to lds_deploy
+# Assumes runing at root of dms_deploy area
+set -o errexit
+
+. bin/lib/lib.sh
+CheckInstalls
+
+FULL_NAME="$PREFIX-dms-controller"
+
+serverDir=deployment
+
+IP=$(jq -r ".Instances[0].PublicDnsName" < $serverDir/aws-instance.json)
+cd chef/dms_controller
+knife solo cook -o "recipe[dms_controller::dms_conf]" ubuntu@$IP ../../deployment/node.json --identity-file $AWS_KEY --yes --no-color

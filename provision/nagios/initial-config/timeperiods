@@ -1,0 +1,62 @@
+[
+  [
+    {
+      "name": "none"
+    },
+    {
+      "alias": "No time is a good time"
+    },
+    {
+      "definition": ""
+    },
+    {
+      "exclude": ""
+    },
+    {
+      "disable": ""
+    },
+    {
+      "exception": ""
+    }
+  ],
+  [
+    {
+      "name": "24x7"
+    },
+    {
+      "alias": "24 Hours A Day, 7 Days A Week"
+    },
+    {
+      "definition": "sunday|00:00-24:00,monday|00:00-24:00,tuesday|00:00-24:00,wednesday|00:00-24:00,thursday|00:00-24:00,friday|00:00-24:00,saturday|00:00-24:00"
+    },
+    {
+      "exclude": ""
+    },
+    {
+      "disable": ""
+    },
+    {
+      "exception": ""
+    }
+  ],
+  [
+    {
+      "name": "maintenance"
+    },
+    {
+      "alias": "Maintenance window, Thur pm"
+    },
+    {
+      "definition": "sunday|00:00-24:00,monday|00:00-24:00,tuesday|00:00-24:00,wednesday|00:00-24:00,thursday|00:00-17:00,friday|00:00-24:00,saturday|00:00-24:00"
+    },
+    {
+      "exclude": ""
+    },
+    {
+      "disable": ""
+    },
+    {
+      "exception": ""
+    }
+  ]
+]

@@ -1,0 +1,142 @@
+# Example service configuration for a test service with shortname "ts"
+
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix version:  <http://purl.org/linked-data/version#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix qb:   <http://purl.org/linked-data/cube#> .
+@prefix org:  <http://www.w3.org/ns/org#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+
+@prefix dms: <http://www.epimorphics.com/public/vocabulary/dms#> .
+
+@prefix : <http://localhost/dms/metadata/ts/> .
+
+:ts a dms:DataService;
+    rdfs:label "Test service"@en;
+    rdfs:comment "A test service"@en;
+    skos:notation "ts";
+    dms:defaultPublicationSet :production;
+    dms:publicationSet :testing, :production;
+    dms:notifyUser "dave@epimorphics.com";
+    .
+
+# -- Data components --------------------------------
+
+:datasets a dms:DataComponent;
+    rdfs:label "Data sets"@en;
+    rdfs:comment "Data sets, can be  provided directly in RDF."@en;
+    skos:notation "datasets";
+    dms:updatePolicy dms:series;
+    dct:isPartOf  :ts;
+    #dms:postPublishScript "ts/updates/ts-rebuild.ru";
+    .
+
+:codelists a dms:DataComponent;
+    rdfs:label "Code lists"@en;
+    rdfs:comment "Code lists that can be provided as CSV tables of concepts. "@en;
+    skos:notation "codelists";
+    dms:updatePolicy dms:series;
+    dct:isPartOf  :ts;
+    dms:dataConverter "general/test-skos";
+    .
+
+:vocabularies a dms:DataComponent;
+    rdfs:label "Vocabularies"@en;
+    rdfs:comment "Collection of vocabularies/ontologies used to publish ts data."@en;
+    skos:notation "vocabularies";
+    dct:isPartOf :ts;
+    dms:updatePolicy dms:multiple;
+    dms:sourcePublishDir  "ts/sources/def";
+    dms:dataPublishDir    "ts/sources/def";
+    .
+
+# -- Publication sets --------------------------------
+
+:testing a dms:PublicationSet;
+    rdfs:label "Testing"@en;
+    skos:notation "testing";
+    dct:description "The publications released to the testing service."@en;
+    dms:publishAction "default/publish";
+    dms:publicationTier :testingServers;
+    dms:consolidatedUpdates false;
+    dms:postPublishAction "ts/postPublish";
+    .
+
+:production a dms:PublicationSet;
+    rdfs:label "Production"@en;
+    skos:notation "production";
+    dct:description "The publications released to production."@en;
+    dms:publishAction "default/publish";
+    dms:publicationTier :productionServers;
+    # dms:tier :prodPresServers;
+    dms:consolidatedUpdates false;
+    dms:postPublishAction "ts/postPublish";
+    .
+
+# -- Tiers --------------------------------
+
+:testingServers a dms:Tier;
+    rdfs:label "Data servers/pub in testing"@en;
+    dct:description "Data servers holding published data for the testing service."@en;
+    skos:notation "testingServers";
+    dms:tierRole "dataServers";
+    dms:graphEndpoint   "http://{address}:3030/ds/data";
+    dms:updateEndpoint  "http://{address}:3030/ds/update";
+    dms:queryEndpoint  "http://{address}:3030/ds/query";
+    dms:configureAction "ts/server/configure";
+    dms:allocateAction "ts/server/allocate";
+    dms:terminateAction "default/terminate";
+    dms:parallelPublish true ;
+    dms:externalState  true;
+    dms:loadStateAction "generic/loadState";
+    dms:catchupStateAction "generic/catchupState";
+    dms:publishStateAction "generic/publishState";
+    dms:publishAction      "generic/dupublish";
+    dms:operation :clearCacheOp;
+    .
+
+:productionServers a dms:Tier;
+    rdfs:label "Data servers/pub in production"@en;
+    dct:description "Data servers holding published data for the production service."@en;
+    skos:notation "productionServers";
+    dms:tierRole "dataServers";
+    dms:graphEndpoint   "http://{address}:3030/ds/data";
+    dms:updateEndpoint  "http://{address}:3030/ds/update";
+    dms:queryEndpoint  "http://{address}:3030/ds/query";
+    dms:loadBalancer  :pdataLB;
+    dms:configureAction "ts/server/configure";
+    dms:allocateAction "ts/server/allocate";
+    dms:terminateAction "default/terminate";
+    dms:parallelPublish true ;  # Irrelevant due to next line
+    dms:externalState  true;
+    dms:externalState  true;
+    dms:loadStateAction "generic/loadState";
+    dms:catchupStateAction "generic/catchupState";
+    dms:publishStateAction "generic/publishState";
+    dms:publishAction      "generic/dupublish";
+    dms:operation :clearCacheOp;
+    .
+
+:pdataLB a dms:LoadBalancer;
+    rdfs:label "Production Data LB"@en;
+    rdfs:comment "Load balancer for the production server tier"@en;
+    # Use only the default actions
+    . 
+
+:clearCacheOp
+    rdfs:label "Clear caches";
+    rdfs:comment "Clear the caches for this tier";
+    dms:action "default/clearCache";
+    skos:notation "clearCacheOp";
+    dms:tierOnly true;
+    .
+

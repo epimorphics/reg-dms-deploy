@@ -1,0 +1,40 @@
+#!/bin/bash
+# Allocate a new instance of the DMS controller, 
+#   - assumes run from root of dms-deploy
+#   - 
+set -o errexit
+
+. bin/lib/lib.sh
+CheckInstalls
+
+serverDir=deployment
+FULL_NAME="$PREFIX-dms-controller"
+
+mkdir -p $serverDir
+
+AWS_EBS=50
+AWS_INSTANCE_STORE=yes
+AWS_INSTANCE_TYPE=m3.large
+AWS_AMI=$AMI_UBUNTU_EBS
+AWS_SG=$SG_CONTROL
+CHEF_ROLE=dms_controller
+AWS_IAM_ROLE_ARN="$AWS_DMS_ROLE"
+AWS_IAM_ROLE_NAME=dms-automation
+VPC=$VPC_PUBLIC_C
+# AWS_EXTRA="--network-interfaces '[$MONITOR_NET_IF]'"
+AllocateServer $serverDir
+
+echo "Attaching elastic IP address $ELASTIC_IP_ALLOC"
+AssociateIP $serverDir $ELASTIC_IP_ALLOC
+# Update AWS description to reflect new IP address
+inst_file=$serverDir/aws-instance.json
+instanceID=$( jq -r '.Instances[0].InstanceId' <  $inst_file)
+aws ec2 describe-instances --instance-ids $instanceID | jq .Reservations[0] > $inst_file
+
+echo "Attaching VPC network interface for metric feeds"
+AttachENI $serverDir $MONITOR_NET_IF
+
+InstallChefSolo "$serverDir" chef
+IP=$(jq -r ".Instances[0].PublicDnsName" < $inst_file)
+cd chef/dms_controller
+knife solo cook ubuntu@$IP ../$serverDir/node.json --identity-file $AWS_KEY --yes --no-color

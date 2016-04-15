@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "name": "admins"
+    },
+    {
+      "alias": "Administrator Group"
+    },
+    {
+      "members": "epiadmin"
+    },
+    {
+      "disable": ""
+    }
+  ]
+]

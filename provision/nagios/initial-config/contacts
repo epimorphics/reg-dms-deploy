@@ -1,0 +1,76 @@
+[
+  [
+    {
+      "name": "epiadmin"
+    },
+    {
+      "use": ""
+    },
+    {
+      "alias": "Epimorphics Administrators"
+    },
+    {
+      "emailaddr": ""
+    },
+    {
+      "svcnotifperiod": "24x7"
+    },
+    {
+      "svcnotifopts": "w u c r"
+    },
+    {
+      "svcnotifcmds": "notify-service-by-sns"
+    },
+    {
+      "hstnotifperiod": "24x7"
+    },
+    {
+      "hstnotifopts": "d u r"
+    },
+    {
+      "hstnotifcmds": "notify-host-by-sns"
+    },
+    {
+      "cansubmitcmds": "1"
+    },
+    {
+      "disable": ""
+    },
+    {
+      "svcnotifenabled": "1"
+    },
+    {
+      "hstnotifenabled": "1"
+    },
+    {
+      "pager": ""
+    },
+    {
+      "address1": ""
+    },
+    {
+      "address2": ""
+    },
+    {
+      "address3": ""
+    },
+    {
+      "address4": ""
+    },
+    {
+      "address5": ""
+    },
+    {
+      "address6": ""
+    },
+    {
+      "retainstatusinfo": ""
+    },
+    {
+      "retainnonstatusinfo": ""
+    },
+    {
+      "contactgroups": ""
+    }
+  ]
+]

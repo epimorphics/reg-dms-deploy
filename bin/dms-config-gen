@@ -1,0 +1,24 @@
+#!/bin/bash
+# Create a set of .ssh/config definitions from the S3 saved state
+
+. bin/lib/config.sh
+
+#echo "Host ${PREFIX}-dms"
+#echo "    HostName     $(jq -r ".Instances[0].PublicDnsName" < deployment/aws-instance.json)"
+#echo "    User         ubuntu"
+#echo "    IdentityFile ~/.ssh/$PREFIX.pem"
+#echo ""
+
+readonly WORK="/tmp/lds-config-gen-$RANDOM"
+for i in $( aws s3 ls --recursive "$S3_STATE/" | awk '{print $4}' | grep config.json )
+do 
+    aws s3 cp --quiet "$S3_BUCKET/$i" $WORK
+    host=$( jq -r '.public' $WORK)
+    name=$( jq -r '.name' $WORK)
+    echo "Host $name"
+    echo "    HostName     $host"
+    echo "    User         ubuntu"
+    echo "    IdentityFile $AWS_KEY"
+    echo ""
+done
+rm -f $WORK

@@ -1,0 +1,52 @@
+[
+  [
+    { "name": "mgmt"    },
+    { "alias": "Management Servers"    },
+    { "disable": ""    },
+    { "members": "DMS-controller"    },
+    { "hostgroupmembers": ""    },
+    { "notes": ""    },
+    { "notes_url": ""    },
+    { "action_url": ""    }
+  ],
+  [
+    { "name": "LDS"    },
+    { "alias": "Linked Data Service"    },
+    { "disable": ""    },
+    { "members": "*"    },
+    { "hostgroupmembers": ""    },
+    { "notes": ""    },
+    { "notes_url": ""    },
+    { "action_url": ""    }
+  ],
+  [
+    { "name": "BWQ-data"    },
+    { "alias": "BWQ data servers"    },
+    { "disable": ""    },
+    { "members": ""    },
+    { "hostgroupmembers": ""    },
+    { "notes": ""    },
+    { "notes_url": ""    },
+    { "action_url": ""    }
+  ],
+  [
+    { "name": "BWQ-pres"    },
+    { "alias": "BWQ presentation servers"    },
+    { "disable": ""    },
+    { "members": ""    },
+    { "hostgroupmembers": ""    },
+    { "notes": ""    },
+    { "notes_url": ""    },
+    { "action_url": ""    }
+  ],
+    [
+    { "name": "BWQ"    },
+    { "alias": "BWQ  all servers"    },
+    { "disable": ""    },
+    { "members": "environment.data.gov.uk"    },
+    { "hostgroupmembers": "BWQ-data, BWQ-pres"    },
+    { "notes": ""    },
+    { "notes_url": ""    },
+    { "action_url": ""    }
+  ]      
+]
