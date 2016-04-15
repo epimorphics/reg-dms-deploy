@@ -1,6 +1,6 @@
 # The prefix used to name this DMS instance
 # Affects the naming of keys, S3 buckets, the control server
-pre = 'nrw'
+pre = 'reg'
 node.override['dms_controller']['prefix']         = pre
 
 # The DNS name to use for the control server
@@ -17,8 +17,5 @@ node.override['dms_controller']['conf_repo']     = "https://github.com/epimorphi
 # This information won't be known until after a service has been deployed
 node.override['dms_controller']['monitor_LBs']    = ''
 
-# Baseline data and media
-node.override['dms_controller']['baseline']['nrwbwq']['testing_baseline_images']    = [  ]
-node.override['dms_controller']['baseline']['nrwbwq']['testing_web_snapshot']       = ''
-node.override['dms_controller']['baseline']['nrwbwq']['production_baseline_images'] = [ ]
-node.override['dms_controller']['baseline']['nrwbwq']['production_web_snapshot']    = ''
+# The grafana dashboards to install, each name should correspond to a file "grafana-dashboard-{name}.json"
+node.override['dms_controller']['grafana_dashboards'] = ['dms']

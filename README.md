@@ -1,10 +1,6 @@
-Deployment scripts for creating a DMS instance including the DMS controller and the monitoring components
+DMS configuration for Defra registry (and proxy?) management.
 
-For each copy of DMS create a repository with a copy of this (retain this as an upstream for bug fixes).
-
-## AWS set up and configuration
-
-See https://github.com/epimorphics/internal/wiki/Ops-install-new-DMS-instance
+A customized instance of dms-deploy-base.
 
 ## Commands
 

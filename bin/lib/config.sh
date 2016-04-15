@@ -27,8 +27,8 @@ readonly AMI_UBUNTU_EBS=ami-537afa20        # ubuntu 14.04, 64bit, ebs root
 readonly AMI_UBUNTU_INSTANCE=ami-8470f0f7   # ubuntu 14.04, 64bit, instance root
 readonly AMI_UBUNTU_HVM=ami-6077f713        # ubuntu 14.04, 64bit, HVM (for use with t2)
 
-readonly PREFIX={prefix}
-export AWS_DEFAULT_PROFILE={prefix}
+readonly PREFIX=reg
+export AWS_DEFAULT_PROFILE=reg
 
 # Nagrestconf location, normally on DMS controller machine
 readonly NRC_HOST=127.0.0.1                 
@@ -37,5 +37,5 @@ readonly NRC_HOST=127.0.0.1
 export SSH_FLAGS="-q -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
 # Location of AWS access key
-readonly AWS_KEY={key}
+readonly AWS_KEY=~/.ssh/reg.pem
 
