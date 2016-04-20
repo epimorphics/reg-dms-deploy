@@ -50,3 +50,19 @@
 "@env"  :
     "STATE_FOLDER"  : "s3://reg-dms-deploy/images/reg"
 "@args" : json
+---
+"@name" : "reg/loadState"
+"@javaclass" : "com.epimorphics.dms.util.PrintAction",
+"message" : "Dummy loadState"
+---
+"@name" : "reg/catchupState"
+"@javaclass" : "com.epimorphics.dms.util.PrintAction",
+"message" : "Dummy catchupState"
+---
+"@name" : "reg/dupublishState"
+"@javaclass" : "com.epimorphics.dms.util.PrintAction",
+"message" : "Dummy dupublishState"
+---
+"@name" : "reg/dupublish"
+"@javaclass" : "com.epimorphics.dms.util.PrintAction",
+"message" : "Dummy dupublish"
