@@ -28,3 +28,19 @@ Then copy the backup to a safe location.
 ## Graphite access
 
 Lower case password
+
+## SSL for dev servier
+
+    git clone https://github.com/letsencrypt/letsencrypt
+    cd letsencrypt
+    ./letsencrypt-auto --help
+
+To get certificate:
+
+    ./letsencrypt-auto certonly --manual
+
+To install:
+
+    sudo cp /etc/letsencrypt/live/environment-registry.epimorphics.net/chain.pem /etc/ssl/certs/environment-registry_trusted.pem
+    sudo cp /etc/letsencrypt/live/environment-registry.epimorphics.net/fullchain.pem /etc/ssl/certs/environment-registry.pem
+    sudo cp /etc/letsencrypt/live/environment-registry.epimorphics.net/privkey.pem /etc/ssl/private/privkey.pem
