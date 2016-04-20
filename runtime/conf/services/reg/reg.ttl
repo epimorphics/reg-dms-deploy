@@ -76,10 +76,10 @@
     dms:terminateAction "default/terminate";
     dms:parallelPublish true ;
     dms:externalState  true;
-    dms:loadStateAction "generic/loadState";
-    dms:catchupStateAction "generic/catchupState";
+    dms:loadStateAction "reg/loadState";
+    dms:catchupStateAction "reg/catchupState";
     dms:publishStateAction "reg/dupublishState";
-    dms:publishAction      "generic/dupublish";
+    dms:publishAction      "reg/dupublish";
     .
 
 :productionServers a dms:Tier;
