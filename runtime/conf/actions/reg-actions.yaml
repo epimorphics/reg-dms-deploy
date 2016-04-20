@@ -1,0 +1,52 @@
+# Actions customized for the LDS epr service
+
+# Data server allocation
+"@name" : reg/server/allocate
+"@type" : script
+"@script" : "ops/generic-allocate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+#    "AWS_EBS" : 8
+    "AWS_INSTANCE_STORE" : "yes"
+    "AWS_INSTANCE_TYPE" : "m3.large"
+    "AWS_AMI" : "ami-537afa20"
+    "AWS_SG" : "sg-fae5169d"   # lds-combined
+    "CHEF_ENV"  : "defra-reg-server"
+    "CHEF_ROLE" : "reg-server"
+    "AWS_IAM_ROLE_ARN" : "arn:aws:iam::359429338055:instance-profile/dms-update"
+---
+# Data server allocation
+"@name" : reg/server/production/allocate
+"@type" : script
+"@script" : "ops/generic-allocate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+#    "AWS_EBS" : 8
+    "AWS_INSTANCE_STORE" : "yes"
+    "AWS_INSTANCE_TYPE" : "m3.large"
+    "AWS_AMI" : "ami-537afa20"
+    "AWS_SG" : "sg-fae5169d"   # lds-combined
+    "CHEF_ENV"  : "defra-reg-production-server"
+    "CHEF_ROLE" : "reg-server"
+    "AWS_IAM_ROLE_ARN" : "arn:aws:iam::359429338055:instance-profile/dms-update"
+---
+# Server configuration  
+"@name" : reg/server/configure
+"@type" : script
+"@script" : "ops/generic-configure.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+    "NRC_HOSTGROUP"  : "reg-server"
+    "NRC_SERVICESET" : "BWQ-data-ss"
+    "NRC_SERVICE"    : "check_http_ping"
+---
+# Publish state via S3 upload
+"@name" : reg/dupublishState
+"@type" : script
+"@script" : "ops/duPublishState.sh"
+"@env"  :
+    "STATE_FOLDER"  : "s3://reg-dms-deploy/images/reg"
+"@args" : json
