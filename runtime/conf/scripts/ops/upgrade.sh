@@ -12,16 +12,16 @@ readonly IP=$( jq -r .address "$SERVER/config.json" )
 
 # Complete update
 APT_FLAGS='-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -q -y'
-ssh -t -t $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP sudo apt-get -y -q update
-ssh -t -t $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP sudo DEBIAN_FRONTEND=noninteractive apt-get $APT_FLAGS dist-upgrade
-ssh -t -t $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP sudo apt-get $APT_FLAGS autoclean autoremove
+ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo apt-get -y -q update
+ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo DEBIAN_FRONTEND=noninteractive apt-get $APT_FLAGS dist-upgrade
+ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo apt-get $APT_FLAGS autoclean autoremove
 
 # Force a reboot to install any dist upgrades
-ssh -t -t $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP sudo reboot
+ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo reboot
 
 # Wait for machine to come up again
-sleep 10s
-ssh -t -t $SSH_FLAGS -i /var/opt/dms/.ssh/lds.pem -l ubuntu $IP echo "Server up"
+sleep 60s
+ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP echo "Server up"
 
 # Good luck pause to allow services to start as well
 sleep 5s
