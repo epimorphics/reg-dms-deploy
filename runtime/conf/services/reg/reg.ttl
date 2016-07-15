@@ -80,6 +80,7 @@
     dms:catchupStateAction "reg/catchupState";
     dms:publishStateAction "reg/dupublishState";
     dms:publishAction      "reg/dupublish";
+    dms:operation :upgradeOp;
     .
 
 :productionServers a dms:Tier;
@@ -99,6 +100,7 @@
     dms:catchupStateAction "generic/catchupState";
     dms:publishStateAction "reg/dupublishState";
     dms:publishAction      "generic/dupublish";
+    dms:operation :upgradeOp;
     .
 
 :pdataLB a dms:LoadBalancer;
@@ -107,3 +109,9 @@
     # Use only the default actions
     . 
 
+:upgradeOp
+    rdfs:label "Upgrade server";
+    dms:action "default/upgrade";
+    skos:notation "upgradeOp";
+    dms:removeFromLB true;
+    .
