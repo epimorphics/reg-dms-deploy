@@ -25,11 +25,13 @@ Backup:
 
 Then copy the backup to a safe location.
 
+Replaced with epi_base tooling.
+
 ## Graphite access
 
 Lower case password
 
-## SSL for dev servier
+## SSL for dev server
 
     git clone https://github.com/letsencrypt/letsencrypt
     cd letsencrypt

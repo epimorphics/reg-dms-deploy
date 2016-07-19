@@ -12,3 +12,5 @@ include_recipe "dms_controller_base"
 include_recipe "dms_controller::grafana"
 
 #  include_recipe "dms_controller::lds"
+
+include_recipe "dms_controller::ssl"
