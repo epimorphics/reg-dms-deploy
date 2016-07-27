@@ -15,7 +15,7 @@ node.override['dms_controller']['conf_repo']     = "https://github.com/epimorphi
 # Space separated list of names of elastic load balancers that should be monitored 
 # by vacuumetrix and fed in to grpahite/carbon store
 # This information won't be known until after a service has been deployed
-node.override['dms_controller']['monitor_LBs']    = ''
+node.override['dms_controller']['monitor_LBs']    = 'reg-producti-producti-LB'
 
 # The grafana dashboards to install, each name should correspond to a file "grafana-dashboard-{name}.json"
-node.override['dms_controller']['grafana_dashboards'] = ['dms']
+node.override['dms_controller']['grafana_dashboards'] = ['dms', 'reg']
