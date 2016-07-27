@@ -44,13 +44,13 @@
     "NRC_SERVICE"    : "check_http_ping"
 ---
 # Publish state via S3 upload
-"@name" : reg/dupublishState
-"@type" : script
-"@script" : "ops/duPublishState.sh"
-"@env"  :
-    "STATE_FOLDER"  : "s3://reg-dms-deploy/images/reg"
-"@args" : json
----
+#"@name" : reg/dupublishState
+#"@type" : script
+#"@script" : "ops/duPublishState.sh"
+#"@env"  :
+#    "STATE_FOLDER"  : "s3://reg-dms-deploy/images/reg"
+#"@args" : json
+#---
 "@name" : "reg/loadState"
 "@javaclass" : "com.epimorphics.dms.util.PrintAction"
 "message" : "Dummy loadState"

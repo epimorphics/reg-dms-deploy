@@ -41,6 +41,8 @@ To get certificate:
 
     ./letsencrypt-auto certonly --manual
 
+environment-registry.epimorphics.net location-registry.epimorphics.net    
+
 To install:
 
     sudo cp /etc/letsencrypt/live/environment-registry.epimorphics.net/chain.pem /etc/ssl/certs/environment-registry_trusted.pem
