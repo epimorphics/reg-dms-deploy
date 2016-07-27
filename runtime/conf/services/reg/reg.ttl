@@ -100,6 +100,7 @@
     dms:catchupStateAction "reg/catchupState";
     dms:publishStateAction "reg/dupublishState";
     dms:publishAction      "reg/dupublish";
+    dms:loadBalancer  :pdataLB;
     dms:operation :upgradeOp;
     .
 
