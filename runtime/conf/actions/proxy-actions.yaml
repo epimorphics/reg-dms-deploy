@@ -1,0 +1,45 @@
+# Actions customized for the Defra proxy service
+
+# Proxy server allocation
+"@name" : proxy/server/allocate
+"@type" : script
+"@script" : "ops/generic-allocate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+#    "AWS_EBS" : 8
+    "AWS_INSTANCE_STORE" : "yes"
+    "AWS_INSTANCE_TYPE" : "m3.medium"
+    "AWS_AMI" : "ami-b4691cc7"
+    "AWS_SG" : "sg-ddc4f2ba"  
+    "CHEF_ENV"  : "defra-proxy-dev"
+    "CHEF_ROLE" : "defra_proxy"
+    "AWS_IAM_ROLE_ARN" : "arn:aws:iam::359429338055:instance-profile/dms-update"
+---
+# Data server allocation
+"@name" : proxy/server/production/allocate
+"@type" : script
+"@script" : "ops/generic-allocate.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+#    "AWS_EBS" : 8
+    "AWS_INSTANCE_STORE" : "yes"
+    "AWS_INSTANCE_TYPE" : "m3.medium"
+    "AWS_AMI" : "ami-b4691cc7"
+    "AWS_SG" : "sg-ddc4f2ba"   
+    "CHEF_ENV"  : "defra-proxy-production"
+    "CHEF_ROLE" : "proxy-server"
+    "AWS_IAM_ROLE_ARN" : "arn:aws:iam::359429338055:instance-profile/dms-update"
+---
+# Server configuration  
+"@name" : proxy/server/configure
+"@type" : script
+"@script" : "ops/generic-configure.sh"
+"@args" :
+  - "serverDir"
+"@env"  :
+    "NRC_HOSTGROUP"  : "proxy-server"
+    "NRC_SERVICESET" : "proxy-ss"
+    "NRC_SERVICE"    : "check_http_ping"
+

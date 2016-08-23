@@ -1,0 +1,76 @@
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix version:  <http://purl.org/linked-data/version#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix qb:   <http://purl.org/linked-data/cube#> .
+@prefix org:  <http://www.w3.org/ns/org#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+
+@prefix dms: <http://www.epimorphics.com/public/vocabulary/dms#> .
+
+@prefix : <http://localhost/dms/metadata/proxy/> .
+
+:proxy a dms:DataService;
+    rdfs:label "Proxy service"@en;
+    rdfs:comment "Defra proxy for - environment and location"@en;
+    skos:notation "proxy";
+    dms:defaultPublicationSet :production;
+    dms:publicationSet :dev, :production;
+    dms:notifyUser "brian@epimorphics.com";
+    .
+
+# -- Data components --------------------------------
+
+
+# -- Publication sets --------------------------------
+    .
+
+# -- Tiers --------------------------------
+
+:devServers a dms:Tier;
+    rdfs:label "Dev servers"@en;
+    dct:description "Servers for the dev service."@en;
+    skos:notation "devServers";
+    dms:tierRole "proxyServers";
+    dms:configureAction "proxy/server/configure";
+    dms:allocateAction "proxy/server/allocate";
+    dms:terminateAction "default/terminate";
+    dms:parallelPublish true ;
+    dms:externalState  true;
+    dms:operation :upgradeOp;
+    .
+
+:productionServers a dms:Tier;
+    rdfs:label "Proxy servers in production"@en;
+    dct:description "Proxy servers the production service."@en;
+    skos:notation "productionServers";
+    dms:tierRole "proxyServers";
+    dms:configureAction "proxy/server/configure";
+    dms:allocateAction "proxy/server/production/allocate";
+    dms:terminateAction "default/terminate";
+    dms:parallelPublish true ;
+    dms:externalState  true;
+    dms:loadBalancer  :proxyLB;
+    dms:operation :upgradeOp;
+    .
+
+:proxyLB a dms:LoadBalancer;
+    rdfs:label "Production proxy LB"@en;
+    rdfs:comment "Load balancer for the production server tier"@en;
+    # Use only the default actions
+    . 
+
+:upgradeOp
+    rdfs:label "Upgrade server";
+    dms:action "default/upgrade";
+    skos:notation "upgradeOp";
+    dms:removeFromLB true;
+    .
