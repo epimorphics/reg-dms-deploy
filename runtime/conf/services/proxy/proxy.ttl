@@ -29,16 +29,6 @@
 
 # -- Data components --------------------------------
 
-:dummy a dms:DataComponent;
-    rdfs:label "Dummy"@en;
-    rdfs:comment "Dummy component."@en;
-    skos:notation "dummy";
-    dct:isPartOf :proxy;
-    dms:updatePolicy dms:series;
-    dms:sourcePublishDir  "proxy/sources/def";
-    dms:dataPublishDir    "proxy/sources/def";
-    .
-
 # -- Publication sets --------------------------------
 
 :dev a dms:PublicationSet;
