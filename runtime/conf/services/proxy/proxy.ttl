@@ -33,7 +33,7 @@
     rdfs:label "Dummy"@en;
     rdfs:comment "Dummy component."@en;
     skos:notation "dummy";
-    dct:isPartOf :reg;
+    dct:isPartOf :proxy;
     dms:updatePolicy dms:series;
     dms:sourcePublishDir  "proxy/sources/def";
     dms:dataPublishDir    "proxy/sources/def";
