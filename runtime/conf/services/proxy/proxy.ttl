@@ -94,6 +94,7 @@
     rdfs:label "Dev proxy LB"@en;
     rdfs:comment "Load balancer for the proxy development server tier"@en;
     # Use only the default actions
+    .
     
 :proxyLB a dms:LoadBalancer;
     rdfs:label "Production proxy LB"@en;
