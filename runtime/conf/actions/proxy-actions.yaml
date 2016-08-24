@@ -16,7 +16,7 @@
     "CHEF_ROLE" : "defra_proxy"
     "AWS_IAM_ROLE_ARN" : "arn:aws:iam::359429338055:instance-profile/dms-update"
 ---
-# Data server allocation
+# production server allocation
 "@name" : proxy/server/production/allocate
 "@type" : script
 "@script" : "ops/generic-allocate.sh"
@@ -42,4 +42,18 @@
     "NRC_HOSTGROUP"  : "proxy-server"
     "NRC_SERVICESET" : "proxy-ss"
     "NRC_SERVICE"    : "check_http_ping"
-
+---
+# General publication processing
+"@name" : proxy/postPublish
+"@type" : script
+"@script" : "proxy/post-publish.sh"
+"@args" :
+    -  "servers"
+---
+# Publish state via S3 upload
+"@name" : proxy/dupublishState
+"@type" : script
+"@script" : "ops/duPublishState.sh"
+"@env"  :
+    "STATE_FOLDER"  : "s3://dms-deploy/images/proxy"
+"@args" : json
