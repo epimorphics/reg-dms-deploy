@@ -22,8 +22,8 @@
     rdfs:label "Proxy service"@en;
     rdfs:comment "Defra proxy for - environment and location"@en;
     skos:notation "proxy";
-#    dms:defaultPublicationSet :production;
-#    dms:publicationSet :dev, :production;
+    dms:defaultPublicationSet :production;
+    dms:publicationSet :dev, :production;
     dms:notifyUser "brian@epimorphics.com";
     .
 
@@ -40,6 +40,27 @@
     .
 
 # -- Publication sets --------------------------------
+
+:dev a dms:PublicationSet;
+    rdfs:label "Dev"@en;
+    skos:notation "dev";
+    dct:description "The dev environment."@en;
+    dms:publishAction "default/publish";
+    dms:publicationTier :devServers;
+    dms:consolidatedUpdates false;
+#    dms:postPublishAction  "reg/postPublish";
+    .
+
+:production a dms:PublicationSet;
+    rdfs:label "Production"@en;
+    skos:notation "production";
+    dct:description "The production environment."@en;
+    dms:publishAction "default/publish";
+    dms:publicationTier :productionServers;
+    dms:consolidatedUpdates false;
+#    dms:postPublishAction "reg/postPublish";
+    .
+
  
 # -- Tiers --------------------------------
 
