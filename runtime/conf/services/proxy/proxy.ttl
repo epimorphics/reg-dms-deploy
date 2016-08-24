@@ -51,12 +51,6 @@
     dms:configureAction "proxy/server/configure";
     dms:allocateAction "proxy/server/allocate";
     dms:terminateAction "default/terminate";
-    dms:parallelPublish true ;
-    dms:externalState  true;
-    dms:loadStateAction "generic/loadState";
-    dms:catchupStateAction "generic/catchupState";
-    dms:publishStateAction "generic/publishState";
-    dms:publishAction      "generic/dupublish";
     dms:operation :upgradeOp;
     dms:operation :clearCacheOp;
     .
@@ -69,12 +63,6 @@
     dms:configureAction "proxy/server/configure";
     dms:allocateAction "proxy/server/production/allocate";
     dms:terminateAction "default/terminate";
-    dms:parallelPublish true ;
-    dms:externalState  true;
-    dms:loadStateAction "generic/loadState";
-    dms:catchupStateAction "generic/catchupState";
-    dms:publishStateAction "generic/publishState";
-    dms:publishAction      "generic/dupublish";
     dms:loadBalancer  :proxyLB;
     dms:operation :upgradeOp;
     dms:operation :clearCacheOp;
