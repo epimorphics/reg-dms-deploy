@@ -42,18 +42,3 @@
     "NRC_HOSTGROUP"  : "proxy-server"
     "NRC_SERVICESET" : "proxy-ss"
     "NRC_SERVICE"    : "check_http_ping"
----
-# General publication processing
-"@name" : proxy/postPublish
-"@type" : script
-"@script" : "proxy/post-publish.sh"
-"@args" :
-    -  "servers"
----
-# Publish state via S3 upload
-"@name" : proxy/dupublishState
-"@type" : script
-"@script" : "ops/duPublishState.sh"
-"@env"  :
-    "STATE_FOLDER"  : "s3://dms-deploy/images/proxy"
-"@args" : json
