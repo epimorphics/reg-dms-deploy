@@ -22,8 +22,8 @@
     rdfs:label "Proxy service"@en;
     rdfs:comment "Defra proxy for - environment and location"@en;
     skos:notation "proxy";
-    dms:defaultPublicationSet :production;
-    dms:publicationSet :dev, :production;
+#    dms:defaultPublicationSet :production;
+#    dms:publicationSet :dev, :production;
     dms:notifyUser "brian@epimorphics.com";
     .
 
