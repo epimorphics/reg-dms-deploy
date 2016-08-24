@@ -40,26 +40,6 @@
     .
 
 # -- Publication sets --------------------------------
-
-:dev a dms:PublicationSet;
-    rdfs:label "Dev"@en;
-    skos:notation "dev";
-    dct:description "The publications released to the dev proxy service."@en;
-    dms:publishAction "default/publish";
-    dms:publicationTier :devServers;
-    dms:consolidatedUpdates false;
-    dms:postPublishAction "proxy/postPublish";
-    .
-
-:production a dms:PublicationSet;
-    rdfs:label "Production"@en;
-    skos:notation "production";
-    dct:description "The publications released to production."@en;
-    dms:publishAction "default/publish";
-    dms:publicationTier :productionServers;
-    dms:consolidatedUpdates false;
-    dms:postPublishAction "proxy/postPublish";
-    .
  
 # -- Tiers --------------------------------
 
