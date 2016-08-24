@@ -48,9 +48,6 @@
     dct:description "Servers for the dev service."@en;
     skos:notation "devServers";
     dms:tierRole "proxyServers";
-    dms:graphEndpoint   "http://{address}:3030/ds/data";
-    dms:updateEndpoint  "http://{address}:3030/ds/update";
-    dms:queryEndpoint  "http://{address}:3030/ds/query";
     dms:configureAction "proxy/server/configure";
     dms:allocateAction "proxy/server/allocate";
     dms:terminateAction "default/terminate";
@@ -69,9 +66,6 @@
     dct:description "Proxy servers the production service."@en;
     skos:notation "productionServers";
     dms:tierRole "proxyServers";
-    dms:graphEndpoint   "http://{address}:3030/ds/data";
-    dms:updateEndpoint  "http://{address}:3030/ds/update";
-    dms:queryEndpoint  "http://{address}:3030/ds/query";
     dms:configureAction "proxy/server/configure";
     dms:allocateAction "proxy/server/production/allocate";
     dms:terminateAction "default/terminate";
