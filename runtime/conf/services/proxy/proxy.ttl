@@ -33,13 +33,34 @@
     rdfs:label "Dummy"@en;
     rdfs:comment "Dummy component."@en;
     skos:notation "dummy";
-    dct:isPartOf :reg;
+    dct:isPartOf :proxy;
     dms:updatePolicy dms:series;
     dms:sourcePublishDir  "proxy/sources/def";
     dms:dataPublishDir    "proxy/sources/def";
     .
 
 # -- Publication sets --------------------------------
+
+:dev a dms:PublicationSet;
+    rdfs:label "Dev"@en;
+    skos:notation "dev";
+    dct:description "The dev environment."@en;
+    dms:publishAction "default/publish";
+    dms:publicationTier :devServers;
+    dms:consolidatedUpdates false;
+#    dms:postPublishAction  "reg/postPublish";
+    .
+
+:production a dms:PublicationSet;
+    rdfs:label "Production"@en;
+    skos:notation "production";
+    dct:description "The production environment."@en;
+    dms:publishAction "default/publish";
+    dms:publicationTier :productionServers;
+    dms:consolidatedUpdates false;
+#    dms:postPublishAction "reg/postPublish";
+    .
+
  
 # -- Tiers --------------------------------
 
@@ -51,9 +72,9 @@
     dms:configureAction "proxy/server/configure";
     dms:allocateAction "proxy/server/allocate";
     dms:terminateAction "default/terminate";
-    dms:parallelPublish true ;
-    dms:externalState  true;
+    dms:loadBalancer  :proxyDevLB;
     dms:operation :upgradeOp;
+    dms:operation :clearCacheOp;
     .
 
 :productionServers a dms:Tier;
@@ -64,17 +85,30 @@
     dms:configureAction "proxy/server/configure";
     dms:allocateAction "proxy/server/production/allocate";
     dms:terminateAction "default/terminate";
-    dms:parallelPublish true ;
-    dms:externalState  true;
     dms:loadBalancer  :proxyLB;
     dms:operation :upgradeOp;
+    dms:operation :clearCacheOp;
     .
 
+:proxyDevLB a dms:LoadBalancer;
+    rdfs:label "Dev proxy LB"@en;
+    rdfs:comment "Load balancer for the proxy development server tier"@en;
+    # Use only the default actions
+    .
+    
 :proxyLB a dms:LoadBalancer;
     rdfs:label "Production proxy LB"@en;
-    rdfs:comment "Load balancer for the production server tier"@en;
+    rdfs:comment "Load balancer for the proxy production server tier"@en;
     # Use only the default actions
     . 
+    
+:clearCacheOp
+    rdfs:label "Clear caches";
+    rdfs:comment "Clear the caches for this tier";
+    dms:action "default/clearCache";
+    skos:notation "clearCacheOp";
+    dms:tierOnly true;
+    .    
 
 :upgradeOp
     rdfs:label "Upgrade server";
@@ -82,3 +116,4 @@
     skos:notation "upgradeOp";
     dms:removeFromLB true;
     .
+
