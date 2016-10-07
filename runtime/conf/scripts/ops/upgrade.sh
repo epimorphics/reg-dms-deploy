@@ -12,10 +12,10 @@ readonly IP=$( jq -r .address "$SERVER/config.json" )
 
 # Complete update
 APT_FLAGS='-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -q -y'
-ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo apt-get -y -q update
+#ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo apt-get -y -q update
 ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo DEBIAN_FRONTEND=noninteractive apt-get $APT_FLAGS dist-upgrade
 ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo apt-get $APT_FLAGS autoclean
-ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo apt-get $APT_FLAGS autoremove
+ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo DEBIAN_FRONTEND=noninteractive apt-get $APT_FLAGS autoremove
 
 # Force a reboot to install any dist upgrades
 ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo reboot
