@@ -18,4 +18,4 @@ node.override['dms_controller']['conf_repo']     = "https://github.com/epimorphi
 node.override['dms_controller']['monitor_LBs']    = 'reg-producti-producti-LB'
 
 # The grafana dashboards to install, each name should correspond to a file "grafana-dashboard-{name}.json"
-node.override['dms_controller']['grafana_dashboards'] = ['dms', 'reg']
+node.override['dms_controller']['grafana_dashboards'] = ['dms', 'reg', 'proxy']
