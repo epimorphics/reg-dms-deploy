@@ -629,14 +629,14 @@
         "2h",
         "1d"
       ],
-      "now": false,
+      "now": true,
       "collapse": false,
       "notice": false
     }
   ],
   "time": {
-    "from": "2016-10-12T08:06:49.978Z",
-    "to": "2016-10-17T15:47:37.978Z"
+    "from": "now-7d",
+    "to": "now"
   },
   "templating": {
     "list": []
