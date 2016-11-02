@@ -18,6 +18,7 @@ ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo apt-get $APT_FLAGS autoclean
 ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo DEBIAN_FRONTEND=noninteractive apt-get $APT_FLAGS autoremove
 
 # Force a reboot to install any dist upgrades
+echo rebooting server
 ssh -t -t $SSH_FLAGS -i $AWS_KEY -l ubuntu $IP sudo shutdown -r +1
 
 # Wait for machine to come up again
