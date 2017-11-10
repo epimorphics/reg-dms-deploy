@@ -1,5 +1,9 @@
 # Reg DMS set up notes
 
+Notes below are obsoleted. Now switched off letsencrypt due to errors doing the renewal.
+
+Just installed our standard wildcard certificate manually.
+
 ## TLS
 
 Installed letsencrypt-auto client and a (3 month) certificate
